@@ -1,0 +1,387 @@
+/* Font family */
+@import url("https://fonts.googleapis.com/css2?family=Geist:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body,
+html {
+	height: 100%;
+}
+
+body {
+	font-family: "Geist", sans-serif;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.Poppins {
+	font-family: "Poppins", sans-serif;
+}
+
+/* Enhanced scrollbar for dark mode */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: hsl(var(--muted-foreground));
+	border-radius: 10px;
+	transition: background-color 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background-color: hsl(var(--foreground));
+}
+
+/* Firefox */
+* {
+	scrollbar-color: hsl(var(--muted-foreground)) transparent;
+	scrollbar-width: thin;
+}
+
+.custom-dots {
+	bottom: -25px;
+}
+.custom-dots li button:before {
+	font-size: 8px;
+	color: rgba(255, 255, 255, 0.3);
+}
+.custom-dots li.slick-active button:before {
+	color: rgba(0, 179, 255, 0.8);
+}
+
+.pending {
+	color: #e9a52b;
+}
+.success {
+	color: #4ecb71;
+}
+.failed {
+	color: #d34053;
+}
+
+.customBlur {
+	backdrop-filter: blur(5px);
+}
+
+.customBlur2 {
+	backdrop-filter: blur(20px);
+}
+
+.spin {
+	animation: spin 1s linear infinite;
+	font-size: 1rem;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* Theme transition animations */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.theme-transition {
+	animation: fadeInUp 0.3s ease-out;
+}
+
+/* Custom theme toggle animations */
+.theme-icon-enter {
+	animation: iconEnter 0.5s ease-out;
+}
+
+.theme-icon-exit {
+	animation: iconExit 0.5s ease-out;
+}
+
+@keyframes iconEnter {
+	0% {
+		transform: rotate(-180deg) scale(0.5);
+		opacity: 0;
+	}
+	100% {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
+}
+
+@keyframes iconExit {
+	0% {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
+	100% {
+		transform: rotate(180deg) scale(0.5);
+		opacity: 0;
+	}
+}
+
+@layer components {
+	.max-ctn {
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 16px;
+	}
+
+	.input {
+		@apply sm:flex-1 max-sm:w-full text-base leading-normal text-foreground pl-5 max-sm:p-4 outline-none sm:border-none border max-sm:border-border max-sm:rounded-full bg-background;
+	}
+
+	.inputLabel {
+		@apply block text-xs font-medium text-muted-foreground mb-1.5;
+	}
+
+	.editUserInput {
+		@apply shadow-sm bg-background border border-border text-foreground text-sm rounded-lg focus:ring-ring focus:border-ring block w-full p-2.5 transition-colors;
+	}
+
+	.editUserLabel {
+		@apply block mb-2 text-sm font-medium text-foreground;
+	}
+
+	.primaryBtn {
+		@apply text-primary-foreground py-[18px] px-4 inline-block rounded-xl font-semibold text-sm bg-primary hover:bg-primary/90 transition-colors;
+	}
+}
+
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 240 10% 3.9%;
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+		--primary: 240 5.9% 10%;
+		--primary-foreground: 0 0% 98%;
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+		--destructive: 0 84.2% 60.2%;
+		--destructive-foreground: 0 0% 98%;
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+		--ring: 240 10% 3.9%;
+		--chart-1: 12 76% 61%;
+		--chart-2: 173 58% 39%;
+		--chart-3: 197 37% 24%;
+		--chart-4: 43 74% 66%;
+		--chart-5: 27 87% 67%;
+		--radius: 0.5rem;
+		--sidebar-background: 0 0% 98%;
+		--sidebar-foreground: 240 5.3% 26.1%;
+		--sidebar-primary: 240 5.9% 10%;
+		--sidebar-primary-foreground: 0 0% 98%;
+		--sidebar-accent: 240 4.8% 95.9%;
+		--sidebar-accent-foreground: 240 5.9% 10%;
+		--sidebar-border: 220 13% 91%;
+		--sidebar-ring: 217.2 91.2% 59.8%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+	width: 8px;
+}
+
+::-webkit-scrollbar-track {
+	background: transparent; /* Hide the scrollbar track (background) */
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 10px;
+}
+
+/* Firefox */
+* {
+	scrollbar-color: #888 transparent;
+	scrollbar-width: thin;
+}
+
+.custom-dots {
+	bottom: -25px;
+}
+.custom-dots li button:before {
+	font-size: 8px;
+	color: rgba(255, 255, 255, 0.3);
+}
+.custom-dots li.slick-active button:before {
+	color: rgba(0, 179, 255, 0.8);
+}
+
+.pending {
+	color: #e9a52b;
+}
+.success {
+	color: #4ecb71;
+}
+.failed {
+	color: #d34053;
+}
+
+.customBlur {
+	backdrop-filter: blur(10px);
+}
+
+.customBlur2 {
+	backdrop-filter: blur(20px);
+}
+
+.spin {
+	animation: spin 1s linear infinite;
+	font-size: 1rem;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+@layer components {
+	.max-ctn {
+		width: 100%;
+		max-width: 1400px;
+		margin: 0 auto;
+		padding: 0 16px;
+	}
+
+	.input {
+		@apply sm:flex-1 max-sm:w-full text-base leading-normal text-slate-900 pl-5 max-sm:p-4 outline-none sm:border-none border max-sm:border-slate-900 max-sm:rounded-full;
+	}
+
+	.inputLabel {
+		@apply block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5;
+	}
+
+	.editUserInput {
+		@apply shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-900 dark:border-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+	}
+
+	.editUserLabel {
+		@apply block mb-2 text-sm font-medium text-gray-900 dark:text-white;
+	}
+
+	.primaryBtn {
+		@apply text-white py-[18px] px-4 inline-block rounded-xl font-semibold text-sm bg-gray-900;
+	}
+}
+
+
+@layer utilities {
+	/* Chrome, Safari and Opera */
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+
+	.pad {
+		@apply sm:px-16 px-5 sm:py-24 py-12;
+	}
+
+	.pad-x {
+		@apply sm:px-16 px-5;
+	}
+
+	.pad-y {
+		@apply sm:py-24 py-12;
+	}
+
+	.pad-l {
+		@apply sm:pl-16 pl-5;
+	}
+
+	.pad-r {
+		@apply sm:pr-16 pr-5;
+	}
+
+	.pad-t {
+		@apply sm:pt-24 pt-12;
+	}
+
+	.pad-b {
+		@apply sm:pb-24 pb-12;
+	}
+
+	.info-text {
+		@apply font-montserrat text-slate-900 text-lg leading-7;
+	}
+
+	.hd-text {
+		@apply text-3xl font-semibold md:text-5xl;
+	}
+
+	.desc {
+		@apply mb-6 max-w-[528px] text-xl md:mb-10 lg:mb-12;
+	}
+
+	.avatar {
+		@apply inline-block h-12 w-12 rounded-full object-cover z-10;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	#headlessui-portal-root .relative {
+		margin: 20px 0 !important;
+	}
+
+	#headlessui-portal-root .relative span {
+		font-size: 1.2rem !important;
+	}
+}
+
+@media screen and (max-width: 500px) {
+	#slide {
+		overflow: -moz-hidden-unscrollable;
+	}
+}
