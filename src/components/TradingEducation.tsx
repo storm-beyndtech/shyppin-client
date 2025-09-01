@@ -99,7 +99,7 @@ export default function TradingEducation() {
 							<div className="aspect-w-16 aspect-h-9">
 								<iframe
 									className="w-full h-[300px] sm:h-[400px] md:h-[500px]"
-									src="https://www.youtube.com/embed/BxNxnj_JWTY?si=eetuJtrjMQZPV0iR"
+									src="https://www.youtube.com/embed/HtO5hg69ZUs?si=POwOzOa3CP8p3zDA"
 									title="Trading Education Video"
 									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 									allowFullScreen
