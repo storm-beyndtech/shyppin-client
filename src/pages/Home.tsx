@@ -10,6 +10,7 @@ import InvestmentOverviewSection from "@/components/Home/InvestmentOverviewSecti
 import Reviews from "@/components/Reviews";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
+import TradingEducation from "@/components/TradingEducation";
 
 const Home: React.FC = () => {
 	const [searchParams] = useSearchParams();
@@ -23,6 +24,7 @@ const Home: React.FC = () => {
 		<div className="min-h-screen">
 			<Hero />
 			<StepsSection />
+			<TradingEducation />
 			<TradingViewWidget />
 			<InvestmentOverviewSection />
 			<MissionVision />
