@@ -108,25 +108,21 @@ function App() {
 						</>
 					) : (
 						<>
-							{user.kycStatus !== "approved" ? (
-								<Route path="/dashboard/*" element={<Navigate to="/kyc" replace />} />
-							) : (
-								<Route path="/dashboard" element={<DashboardLayout />}>
-									<Route index element={<Dashboard />} />
-									<Route path="investment-plan" element={<InvestmentPlan />} />
-									<Route path="investments" element={<InvestmentLog />} />
-									<Route path="all-transactions" element={<AllTransactions />} />
-									<Route path="deposit" element={<Deposit />} />
-									<Route path="deposits" element={<DepositLog />} />
-									<Route path="withdraw" element={<Withdraw />} />
-									<Route path="withdrawals" element={<WithdrawalLog />} />
-									<Route path="profile" element={<Profile />} />
-									<Route path="events" element={<EventsPage />} />
-									<Route path="*" element={<Navigate to="/dashboard" replace />} />
-								</Route>
-							)}
+							<Route path="/dashboard" element={<DashboardLayout />}>
+								<Route index element={<Dashboard />} />
+								<Route path="investment-plan" element={<InvestmentPlan />} />
+								<Route path="investments" element={<InvestmentLog />} />
+								<Route path="all-transactions" element={<AllTransactions />} />
+								<Route path="deposit" element={<Deposit />} />
+								<Route path="deposits" element={<DepositLog />} />
+								<Route path="withdraw" element={<Withdraw />} />
+								<Route path="withdrawals" element={<WithdrawalLog />} />
+								<Route path="profile" element={<Profile />} />
+								<Route path="events" element={<EventsPage />} />
+								<Route path="kyc" element={<KYC />} />
+								<Route path="*" element={<Navigate to="/dashboard" replace />} />
+							</Route>
 
-							<Route path="kyc" element={<KYC />} />
 							{/* Redirect regular user from admin routes */}
 							<Route path="/admin/*" element={<Navigate to="/dashboard" replace />} />
 							<Route path="/login" element={<Navigate to="/dashboard" replace />} />
@@ -196,8 +192,8 @@ function App() {
 				<>
 					{/* Not logged in - Auth routes */}
 					<Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
+					<Route path="/signup" element={<Signup />} />
+					<Route path="/forgot-password" element={<ForgotPassword />} />
 
 					{/* Public Routes (for non-logged-in users) */}
 					<Route

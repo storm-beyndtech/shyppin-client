@@ -11,7 +11,8 @@ import {
 	ChevronLeft,
 	ChevronRight,
 	X,
-  Calendar,
+	Calendar,
+	ShieldCheck,
 } from "lucide-react";
 import Logo from "../../../components/Logo";
 import { ScrollArea } from "../../UI/scroll-area";
@@ -69,7 +70,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 		},
 		{
 			title: "ACCOUNT",
-			items: [{ icon: User, label: "Profile", to: "/dashboard/profile" }, { icon: Calendar, label: "Events", to: "/dashboard/events" }],
+			items: [
+				{ icon: User, label: "Profile", to: "/dashboard/profile" },
+				{ icon: ShieldCheck, label: "Kyc", to: "/dashboard/kyc" },
+				{ icon: Calendar, label: "Events", to: "/dashboard/events" },
+			],
 		},
 	];
 

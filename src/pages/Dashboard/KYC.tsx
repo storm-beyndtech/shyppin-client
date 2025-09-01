@@ -1,4 +1,3 @@
-import Header from "@/components/Layouts/KycLayout/Header";
 import ProofOfIdentificationForm from "@/components/ProofOfIdentificationForm";
 import { contextData } from "@/context/AuthContext";
 import { CheckCircle, Clock, XCircle, FileText, RefreshCw } from "lucide-react";
@@ -235,7 +234,6 @@ export default function KYC() {
 
 	return (
 		<div className="bg-slate-50 dark:bg-slate-950">
-			<Header />
 			{hasSubmittedKYC ? (
 				<KYCStatusMessage
 					status={user.kycStatus}
