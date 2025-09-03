@@ -178,7 +178,7 @@ export default function ProofOfIdentificationForm({ onSubmit }: { onSubmit: () =
 			console.error("Error submitting form:", error);
 		} finally {
       setLoading(false);
-      onSubmit(); // Call the onSubmit prop to notify parent component
+      onSubmit();
 		}
 	};
 

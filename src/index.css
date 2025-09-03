@@ -10,6 +10,8 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	scrollbar-color: hsl(var(--muted-foreground)) transparent;
+	scrollbar-width: thin;
 }
 
 html {
@@ -49,10 +51,46 @@ body {
 	background-color: hsl(var(--foreground));
 }
 
-/* Firefox */
-* {
-	scrollbar-color: hsl(var(--muted-foreground)) transparent;
-	scrollbar-width: thin;
+/* Remove background and padding from the switcher */
+.gtranslate_wrapper,
+.gtranslate_wrapper * {
+	background: transparent !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	box-shadow: none !important;
+	border: none !important;
+	font-size: 12px !important;
+}
+
+/* Remove background and padding */
+.gtranslate_wrapper > div {
+	background: transparent !important;
+	position: relative !important;
+}
+
+/* Make flag in switcher smaller */
+.gtranslate_wrapper > div img {
+	width: 20px !important;
+	height: auto !important;
+	margin-right: 4px !important;
+}
+
+.gt_options a {
+	padding: 4px !important;
+}
+
+.gt_options {
+	background: white !important;
+}
+
+.gtranslate_wrapper > div::after {
+	content: "▾";
+	position: absolute;
+	right: 4px;
+	top: 50%;
+	transform: translateY(-60%);
+	font-size: 20px;
+	color: #555;
 }
 
 .custom-dots {
@@ -312,7 +350,6 @@ body {
 		@apply text-white py-[18px] px-4 inline-block rounded-xl font-semibold text-sm bg-gray-900;
 	}
 }
-
 
 @layer utilities {
 	/* Chrome, Safari and Opera */

@@ -4,6 +4,7 @@ import { ArrowRight, Menu, X } from "lucide-react";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import GTranslateProvider from "./UI/GTranslateProvider";
 
 const Navbar: FC = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +40,10 @@ const Navbar: FC = () => {
 					<Link to="/events" className="text-sm font-medium hover:text-blue-100">
 						Event
 					</Link>
-					<div className="flex items-center space-x-2">
+					<div className="flex items-center space-x-3">
+						<div className="cursor-pointer">
+							<GTranslateProvider />
+						</div>
 						<Link
 							to="/login"
 							className="flex items-center h-10 bg-blue-500 text-white  text-sm font-medium px-4 py-1.5 rounded-xl hover:bg-blue-800  transition-colors text-center"
@@ -57,7 +61,11 @@ const Navbar: FC = () => {
 				</div>
 
 				{/* Mobile menu button */}
-				<div className="md:hidden">
+				<div className="md:hidden flex items-center gap-5">
+					<div className="cursor-pointer">
+						<GTranslateProvider />
+					</div>
+
 					<button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
 						{isOpen ? <X size={24} /> : <Menu size={24} />}
 					</button>
