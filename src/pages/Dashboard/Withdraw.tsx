@@ -9,7 +9,6 @@ import {
 	CheckCircle2,
 	Bitcoin,
 	CreditCard,
-	Shield,
 	FileText,
 } from "lucide-react";
 import PageLoader from "@/components/PageLoader";
