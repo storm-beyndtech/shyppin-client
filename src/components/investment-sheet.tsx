@@ -179,7 +179,7 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 								<div className="flex justify-between items-center">
 									<span className="text-slate-600 dark:text-slate-400">Interest Rate</span>
 									<span className="font-medium text-emerald-600 dark:text-emerald-400">
-										{(investment.planData.interest / investment.amount) * 100} %
+										{((investment.planData.interest / investment.amount) * 100).toFixed(2)} %
 									</span>
 								</div>
 								<div className="flex justify-between items-center">

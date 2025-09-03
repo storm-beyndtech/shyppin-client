@@ -9,9 +9,12 @@ import {
 	CheckCircle2,
 	Bitcoin,
 	CreditCard,
+	Shield,
+	FileText,
 } from "lucide-react";
 import PageLoader from "@/components/PageLoader";
 import { useToastUtils } from "@/services/toast";
+import { useNavigate } from "react-router-dom";
 
 interface Coin {
 	name: string;
@@ -19,6 +22,57 @@ interface Coin {
 	network: string;
 	price: number;
 }
+
+// KYC Verification Required Component
+const KYCRequired = () => {
+	const navigate = useNavigate();
+	return (
+		<div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8 flex items-center justify-center">
+			<div className="max-w-md mx-auto">
+				<h1 className="text-3xl font-semibold text-slate-900 uppercase dark:text-slate-100 mb-4">
+					KYC Verification Required
+				</h1>
+
+				<p className="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+					To withdraw funds, you need to complete your KYC (Know Your Customer) verification. This helps us
+					ensure the security of your account and comply with regulations.
+				</p>
+
+				<div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm rounded-2xl p-6 border border-slate-200 dark:border-slate-800 mb-8">
+					<div className="flex items-center gap-3 text-left">
+						<FileText className="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+						<div>
+							<h3 className="font-medium text-slate-900 dark:text-slate-100">
+								We'll Require One of Following:
+							</h3>
+							<ul className="text-sm text-slate-600 dark:text-slate-400 mt-1 space-y-1">
+								<li>Government-issued ID</li>
+								<li>International Passport</li>
+								<li>Driver's Linsence</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div className="space-y-3">
+					<button
+						onClick={() => navigate("/dashboard/kyc")}
+						className="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-xl font-medium transition-all duration-200 shadow-lg hover:shadow-blue-500/25"
+					>
+						Start KYC Verification
+					</button>
+
+					<button
+						onClick={() => window.history.back()}
+						className="w-full py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl font-medium transition-all duration-200"
+					>
+						Go Back
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+};
 
 export default function Withdraw() {
 	const [amount, setAmount] = useState("");
@@ -34,6 +88,9 @@ export default function Withdraw() {
 	const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 	const { user } = contextData();
 	const { showErrorToast, showSuccessToast } = useToastUtils();
+
+	// Check if user's KYC is verified
+	const isKYCVerified = user.kycStatus === "approved";
 
 	const fetchCoins = async () => {
 		setFetching(true);
@@ -53,13 +110,24 @@ export default function Withdraw() {
 	};
 
 	useEffect(() => {
-		fetchCoins();
-	}, []);
+		// Only fetch coins if KYC is verified
+		if (isKYCVerified) {
+			fetchCoins();
+		}
+	}, [isKYCVerified]);
 
 	const sendWithdraw = async (e: React.FormEvent) => {
 		e.preventDefault();
 		setError("");
 		setSuccess("");
+
+		// Double-check KYC status before processing
+		if (!isKYCVerified) {
+			const errorMsg = "KYC verification is required to withdraw funds";
+			setError(errorMsg);
+			showErrorToast(errorMsg);
+			return;
+		}
 
 		const numAmount = Number(amount);
 		if (numAmount < 1) {
@@ -155,8 +223,15 @@ export default function Withdraw() {
 		return <CreditCard className="w-5 h-5 text-blue-600 dark:text-blue-400" />;
 	};
 
-	if (fetching) return <PageLoader />;
+	// Show loading while fetching coins (only if KYC is verified)
+	if (isKYCVerified && fetching) return <PageLoader />;
 
+	// Show KYC required screen if not verified
+	if (!isKYCVerified) {
+		return <KYCRequired />;
+	}
+
+	// Main withdrawal component (only renders if KYC is verified)
 	return (
 		<div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8">
 			<div className="max-w-2xl mx-auto space-y-6">
