@@ -27,7 +27,6 @@ const Dashboard = () => {
 		data: activeInvestmentData
 	} = useActiveInvestmentInterest({ 
 		userId: user?._id || user?.id,
-		refreshInterval: 60000, // 1 minute
 		enabled: !!(user?._id || user?.id)
 	});
 

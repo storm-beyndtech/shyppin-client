@@ -219,7 +219,6 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 								</h4>
 								<ProgressiveInterest
 									investmentId={investment._id}
-									refreshInterval={30000} // 30 seconds for active investments
 								/>
 							</div>
 						)}
