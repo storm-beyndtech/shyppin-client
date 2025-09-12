@@ -18,13 +18,16 @@ interface PlanData {
 	plan: string;
 	duration: string;
 	interest: number;
+	startDate?: string;
+	endDate?: string;
+	currentInterest?: number;
 }
 
 interface ITransaction {
 	_id: string;
 	type: string;
 	user: User;
-	status: "pending" | "approved" | "rejected" | "completed";
+	status: "pending" | "active" | "approved" | "rejected" | "completed";
 	amount: number;
 	date: string;
 	walletData: WalletData;
@@ -120,6 +123,8 @@ const ManageInvestmentModal: React.FC<ManageInvestmentModalProps> = ({ toggleMod
 							className={`px-3 py-1 rounded-full text-xs font-semibold ${
 								investment.status === "pending"
 									? "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400"
+									: investment.status === "active"
+									? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
 									: investment.status === "approved"
 									? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
 									: investment.status === "completed"
@@ -167,7 +172,7 @@ const ManageInvestmentModal: React.FC<ManageInvestmentModalProps> = ({ toggleMod
 							<div>
 								<p className="text-xs text-gray-500 dark:text-gray-400">Duration</p>
 								<p className="text-sm font-medium text-gray-900 dark:text-white">
-									{investment.planData.duration} days
+									{investment.planData.duration}
 								</p>
 							</div>
 							<div>
@@ -183,9 +188,13 @@ const ManageInvestmentModal: React.FC<ManageInvestmentModalProps> = ({ toggleMod
 								</p>
 							</div>
 							<div>
-								<p className="text-xs text-gray-500 dark:text-gray-400">Interest Amount</p>
+								<p className="text-xs text-gray-500 dark:text-gray-400">
+									{investment.status === "active" ? "Current Interest" : "Interest Amount"}
+								</p>
 								<p className="text-sm font-medium text-green-600 dark:text-green-400">
-									${investment.planData.interest.toLocaleString()}
+									{investment.status === "active" && investment.planData.currentInterest !== undefined
+										? `$${investment.planData.currentInterest.toLocaleString()}`
+										: `$${investment.planData.interest.toLocaleString()}`}
 								</p>
 							</div>
 							<div>
@@ -208,13 +217,15 @@ const ManageInvestmentModal: React.FC<ManageInvestmentModalProps> = ({ toggleMod
 							<div>
 								<p className="text-xs text-gray-500 dark:text-gray-400">Start Date</p>
 								<p className="text-sm font-medium text-gray-900 dark:text-white">
-									{convertDate(investment.date)}
+									{investment.planData.startDate ? convertDate(investment.planData.startDate) : convertDate(investment.date)}
 								</p>
 							</div>
 							<div>
 								<p className="text-xs text-gray-500 dark:text-gray-400">Maturity Date</p>
 								<p className="text-sm font-medium text-gray-900 dark:text-white">
-									{calculateMaturityDate(investment.date, investment.planData.duration)}
+									{investment.planData.endDate 
+										? convertDate(investment.planData.endDate)
+										: calculateMaturityDate(investment.date, investment.planData.duration)}
 								</p>
 							</div>
 						</div>
@@ -286,15 +297,23 @@ const ManageInvestmentModal: React.FC<ManageInvestmentModalProps> = ({ toggleMod
 						</div>
 					)}
 
-					{investment.status === "approved" && (
+					{(investment.status === "active" || investment.status === "approved") && (
 						<button
 							onClick={() => startUpdate("completed")}
 							disabled={completedLoading}
 							className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-3 px-4 rounded-lg transition-colors"
 						>
 							<TrendingUp className="w-4 h-4" />
-							{completedLoading ? "Completing..." : "Mark as Completed"}
+							{completedLoading ? "Completing..." : "Force Complete Investment"}
 						</button>
+					)}
+					
+					{investment.status === "active" && (
+						<div className="mt-2">
+							<p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+								Note: Active investments will automatically complete when their duration expires.
+							</p>
+						</div>
 					)}
 				</div>
 			</div>

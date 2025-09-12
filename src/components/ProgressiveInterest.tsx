@@ -12,7 +12,7 @@ interface ProgressiveInterestProps {
 		timeRemaining: string;
 		isCompleted: boolean;
 	};
-	refreshInterval?: number; // in milliseconds, default 60 seconds
+	refreshInterval?: number; // in milliseconds, default 10 seconds
 }
 
 interface InvestmentProgress {
@@ -31,7 +31,7 @@ interface InvestmentProgress {
 const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 	investmentId,
 	initialData,
-	refreshInterval = 60000, // 1 minute default
+	refreshInterval = 10000, // 10 seconds default
 }) => {
 	const [progress, setProgress] = useState<InvestmentProgress | null>(
 		initialData ? {
@@ -77,18 +77,24 @@ const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 		}
 	}, [progress?.currentInterest, animatedInterest]);
 
-	// Fetch progress on mount and set up interval
+	// Fetch progress on mount
 	useEffect(() => {
 		if (!initialData) {
 			fetchProgress();
 		}
+	}, [investmentId]);
 
-		// Only set up interval if investment is not completed
-		if (!progress?.isCompleted) {
-			const interval = setInterval(fetchProgress, refreshInterval);
-			return () => clearInterval(interval);
-		}
-	}, [investmentId, refreshInterval, progress?.isCompleted]);
+	// Set up interval for periodic updates (separate from completion check)
+	useEffect(() => {
+		const interval = setInterval(() => {
+			// Only fetch if investment is not completed
+			if (!progress?.isCompleted) {
+				fetchProgress();
+			}
+		}, refreshInterval);
+
+		return () => clearInterval(interval);
+	}, [investmentId, refreshInterval]);
 
 	if (loading) {
 		return (

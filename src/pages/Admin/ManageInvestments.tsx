@@ -19,13 +19,16 @@ interface PlanData {
 	plan: string;
 	duration: string;
 	interest: number;
+	startDate?: string;
+	endDate?: string;
+	currentInterest?: number;
 }
 
 interface ITransaction {
 	_id: string;
 	type: string;
 	user: User;
-	status: "pending" | "approved" | "rejected" | "completed";
+	status: "pending" | "active" | "approved" | "rejected" | "completed";
 	amount: number;
 	date: string;
 	walletData: WalletData;
@@ -56,7 +59,35 @@ const ManageInvestments: React.FC = () => {
 			const data = await res.json();
 
 			if (res.ok) {
-				setInvestments(data.filter((inv: ITransaction) => inv.type === "investment"));
+				const allInvestments = data.filter((inv: ITransaction) => inv.type === "investment");
+				
+				// Fetch current progressive interest for active investments
+				const investmentsWithProgress = await Promise.all(
+					allInvestments.map(async (inv: ITransaction) => {
+						if (inv.status === "active" && inv._id) {
+							try {
+								const progressRes = await fetch(`${url}/plans/investment/${inv._id}/progress`);
+								if (progressRes.ok) {
+									const progressData = await progressRes.json();
+									return {
+										...inv,
+										planData: {
+											...inv.planData,
+											currentInterest: progressData.currentInterest,
+											startDate: progressData.startDate,
+											endDate: progressData.endDate,
+										}
+									};
+								}
+							} catch (error) {
+								console.log("Error fetching progress for", inv._id);
+							}
+						}
+						return inv;
+					})
+				);
+				
+				setInvestments(investmentsWithProgress);
 			} else {
 				throw new Error(data.message);
 			}
@@ -71,6 +102,14 @@ const ManageInvestments: React.FC = () => {
 		fetchInvestments();
 	}, [toggle]);
 
+	// Auto-refresh every 10 seconds
+	useEffect(() => {
+		const interval = setInterval(() => {
+			fetchInvestments();
+		}, 10000);
+		return () => clearInterval(interval);
+	}, []);
+
 	const filteredInvestments = investments.filter((investment) => {
 		if (filter === "all") return true;
 		return investment.status === filter;
@@ -80,6 +119,8 @@ const ManageInvestments: React.FC = () => {
 		switch (status) {
 			case "pending":
 				return "text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/20";
+			case "active":
+				return "text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/20";
 			case "approved":
 				return "text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/20";
 			case "completed":
@@ -94,6 +135,7 @@ const ManageInvestments: React.FC = () => {
 	const stats = {
 		total: investments.length,
 		pending: investments.filter((inv) => inv.status === "pending").length,
+		active: investments.filter((inv) => inv.status === "active").length,
 		approved: investments.filter((inv) => inv.status === "approved").length,
 		completed: investments.filter((inv) => inv.status === "completed").length,
 		totalValue: investments.reduce((sum, inv) => sum + inv.amount, 0),
@@ -128,8 +170,8 @@ const ManageInvestments: React.FC = () => {
 								<CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
 							</div>
 							<div className="ml-4">
-								<p className="text-sm font-medium text-gray-600 dark:text-gray-400">Approved</p>
-								<p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.approved}</p>
+								<p className="text-sm font-medium text-gray-600 dark:text-gray-400">Active</p>
+								<p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.active}</p>
 							</div>
 						</div>
 					</div>
@@ -164,7 +206,7 @@ const ManageInvestments: React.FC = () => {
 				{/* Filter Tabs */}
 				<div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700 mb-8">
 					<div className="flex flex-wrap gap-2">
-						{["all", "pending", "approved", "completed", "rejected"].map((status) => (
+						{["all", "pending", "active", "completed", "rejected"].map((status) => (
 							<button
 								key={status}
 								onClick={() => setFilter(status)}
@@ -245,7 +287,7 @@ const ManageInvestments: React.FC = () => {
 														{investment.planData.plan}
 													</div>
 													<div className="text-sm text-gray-500 dark:text-gray-400">
-														{investment.planData.duration} days • {(investment.planData.interest / investment.amount) * 100}%
+														{investment.planData.duration} • {((investment.planData.interest / investment.amount) * 100).toFixed(2)}%
 													</div>
 												</td>
 												<td className="px-6 py-4">
@@ -253,8 +295,9 @@ const ManageInvestments: React.FC = () => {
 														${investment.amount.toLocaleString()}
 													</div>
 													<div className="text-sm text-gray-500 dark:text-gray-400">
-														+${investment.planData.interest.toLocaleString()}{" "}
-														interest
+														{investment.status === "active" && investment.planData.currentInterest !== undefined 
+															? `$${investment.planData.currentInterest.toLocaleString()} earned` 
+															: `+$${investment.planData.interest.toLocaleString()} interest`}
 													</div>
 												</td>
 												<td className="px-6 py-4 text-sm text-gray-900 dark:text-white">
