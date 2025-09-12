@@ -2,8 +2,11 @@ import { useState } from "react";
 import { PiggyBank, TrendingUp, Share2, Users, Mail, Check, Copy } from "lucide-react";
 import { contextData } from "@/context/AuthContext";
 import BankingCard from "@/components/BankingCard";
+import { useActiveInvestmentInterest } from "@/hooks/useActiveInvestmentInterest";
+import { formatCurrencyClean } from "@/utils/formatters";
 
 interface User {
+	_id: string;
 	id: string;
 	username: string;
 	email: string;
@@ -16,6 +19,17 @@ const Dashboard = () => {
 	const [copied, setCopied] = useState(false);
 
 	const { user } = contextData() as { user: User };
+	
+	// Get active investment interest
+	const { 
+		animatedInterest: activeInvestmentInterest, 
+		hasActiveInvestments,
+		data: activeInvestmentData
+	} = useActiveInvestmentInterest({ 
+		userId: user?._id || user?.id,
+		refreshInterval: 60000, // 1 minute
+		enabled: !!(user?._id || user?.id)
+	});
 
 	const handleCopyReferralCode = async () => {
 		try {
@@ -55,17 +69,12 @@ const Dashboard = () => {
 		day: "numeric",
 	});
 
-	const formatCurrency = (amount: number): string => {
-		return new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "USD",
-			minimumFractionDigits: 0,
-			maximumFractionDigits: 2,
-		}).format(amount);
-	};
-
-	// Calculate total balance (deposit + interest)
-	const totalBalance = (user.deposit || 0) + (user.interest || 0);
+	// Calculate total balance (deposit + interest + active investment interest)
+	const totalStaticBalance = (user.deposit || 0) + (user.interest || 0);
+	const totalBalance = totalStaticBalance + (activeInvestmentInterest || 0);
+	
+	// Calculate total profit balance (completed interest + active interest)
+	const totalProfitBalance = (user.interest || 0) + (activeInvestmentInterest || 0);
 
 	return (
 		<div className="min-h-screen bg-gray-50 dark:bg-slate-900/30 p-4 md:p-8">
@@ -93,7 +102,7 @@ const Dashboard = () => {
 						</div>
 						<div>
 							<p className="text-3xl font-normal text-gray-900 dark:text-gray-100 mb-2 tracking-tight">
-								{formatCurrency(totalBalance)}
+								{formatCurrencyClean(totalBalance)}
 							</p>
 							<p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-400 font-medium">
 								Wallet Balance
@@ -111,7 +120,7 @@ const Dashboard = () => {
 						</div>
 						<div>
 							<p className="text-3xl font-normal text-gray-900 dark:text-gray-100 mb-2 tracking-tight">
-								{formatCurrency(user.deposit || 0)}
+								{formatCurrencyClean(user.deposit || 0)}
 							</p>
 							<p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-400 font-medium">
 								Capital Balance
@@ -129,11 +138,32 @@ const Dashboard = () => {
 						</div>
 						<div>
 							<p className="text-3xl font-normal text-gray-900 dark:text-gray-100 mb-2 tracking-tight">
-								{formatCurrency(user.interest || 0)}
+								{formatCurrencyClean(totalProfitBalance)}
 							</p>
 							<p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-400 font-medium">
 								Profit Balance
 							</p>
+							{hasActiveInvestments && (
+								<div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+									<div className="flex justify-between items-center text-xs">
+										<span className="text-gray-500 dark:text-gray-400">Completed:</span>
+										<span className="font-medium text-gray-600 dark:text-gray-300">
+											{formatCurrencyClean(user.interest || 0)}
+										</span>
+									</div>
+									<div className="flex justify-between items-center text-xs mt-1">
+										<span className="text-purple-600 dark:text-purple-400">Active:</span>
+										<span className="font-medium text-purple-600 dark:text-purple-400">
+											{formatCurrencyClean(activeInvestmentInterest || 0)}
+										</span>
+									</div>
+									{activeInvestmentData && (
+										<div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+											{activeInvestmentData.activeInvestmentCount} active investment{activeInvestmentData.activeInvestmentCount !== 1 ? 's' : ''}
+										</div>
+									)}
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

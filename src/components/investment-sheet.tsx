@@ -1,5 +1,7 @@
 import { Transaction } from "@/pages/Dashboard/InvestmentLog";
 import { TrendingUp, Shield, Users, Check, Clock, X, Calendar } from "lucide-react";
+import ProgressiveInterest from "./ProgressiveInterest";
+import { formatCurrencyClean, formatROI } from "@/utils/formatters";
 
 interface InvestmentSheetProps {
 	investment: Transaction | null;
@@ -67,12 +69,7 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 		});
 	};
 
-	const formatCurrency = (amount: number) => {
-		return new Intl.NumberFormat("en-US", {
-			style: "currency",
-			currency: "USD",
-		}).format(amount);
-	};
+	// Remove the old formatCurrency function since we're using the utility now
 
 	return (
 		<>
@@ -125,7 +122,7 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 								<div>
 									<div className="flex items-center justify-center gap-2 mb-1">
 										<p className="text-3xl font-bold text-slate-900 dark:text-slate-100">
-											{formatCurrency(investment.amount)}
+											{formatCurrencyClean(investment.amount)}
 										</p>
 									</div>
 									<p className="text-sm text-slate-500 dark:text-slate-400">Investment Amount</p>
@@ -134,7 +131,7 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 								<div>
 									<div className="flex items-center justify-center gap-2 mb-1">
 										<p className="text-2xl font-bold text-green-600 dark:text-green-400">
-											{formatCurrency(investment.planData.interest)}
+											{formatCurrencyClean(investment.planData.interest)}
 										</p>
 									</div>
 									<p className="text-sm text-slate-500 dark:text-slate-400">Expected Return</p>
@@ -161,25 +158,25 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 								<div className="flex justify-between items-center">
 									<span className="text-slate-600 dark:text-slate-400">Principal Amount</span>
 									<span className="font-medium text-slate-900 dark:text-slate-100">
-										{formatCurrency(investment.amount)}
+										{formatCurrencyClean(investment.amount)}
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
 									<span className="text-slate-600 dark:text-slate-400">Expected Return</span>
 									<span className="font-medium text-green-600 dark:text-green-400">
-										{formatCurrency(investment.planData.interest)}
+										{formatCurrencyClean(investment.planData.interest)}
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
 									<span className="text-slate-600 dark:text-slate-400">Total Payout</span>
 									<span className="font-medium text-slate-900 dark:text-slate-100">
-										{formatCurrency(investment.amount + investment.planData.interest)}
+										{formatCurrencyClean(investment.amount + investment.planData.interest)}
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
 									<span className="text-slate-600 dark:text-slate-400">Interest Rate</span>
 									<span className="font-medium text-emerald-600 dark:text-emerald-400">
-										{((investment.planData.interest / investment.amount) * 100).toFixed(2)} %
+										{formatROI(investment.amount, investment.planData.interest)}
 									</span>
 								</div>
 								<div className="flex justify-between items-center">
@@ -214,6 +211,19 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 							</div>
 						</div>
 
+						{/* Progressive Interest for Active Investments */}
+						{investment.status === "active" && (
+							<div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+								<h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-4">
+									Live Interest Tracking
+								</h4>
+								<ProgressiveInterest
+									investmentId={investment._id}
+									refreshInterval={30000} // 30 seconds for active investments
+								/>
+							</div>
+						)}
+
 						{/* Status-based Messages */}
 						{investment.status === "completed" && (
 							<div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-4 border border-green-200 dark:border-green-800">
@@ -221,11 +231,11 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 									Investment Completed
 								</h4>
 								<p className="text-sm text-green-800 dark:text-green-200">
-									Congratulations! Your investment has matured successfully. The total payout of{" "}
+									Investment completed! Total payout of{" "}
 									<span className="font-bold">
-										{formatCurrency(investment.amount + investment.planData.interest)}
+										{formatCurrencyClean(investment.amount + investment.planData.interest)}
 									</span>{" "}
-									has been credited to your account.
+									credited to your account.
 								</p>
 							</div>
 						)}
@@ -234,9 +244,8 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 							<div className="bg-red-50 dark:bg-red-900/20 rounded-xl p-4 border border-red-200 dark:border-red-800">
 								<h4 className="font-semibold text-red-900 dark:text-red-100 mb-2">Investment Cancelled</h4>
 								<p className="text-sm text-red-800 dark:text-red-200">
-									This investment was cancelled. Your principal amount of{" "}
-									<span className="font-bold">{formatCurrency(investment.amount)}</span> has been refunded to
-									your account.
+									Investment cancelled. Principal {" "}
+									<span className="font-bold">{formatCurrencyClean(investment.amount)}</span> refunded.
 								</p>
 							</div>
 						)}
@@ -247,8 +256,18 @@ const InvestmentSheet: React.FC<InvestmentSheetProps> = ({ investment, isOpen, o
 									Investment Pending
 								</h4>
 								<p className="text-sm text-yellow-800 dark:text-yellow-200">
-									Your investment is currently being processed. You will receive a confirmation once the
-									transaction is verified and activated.
+									Investment being processed. Confirmation pending.
+								</p>
+							</div>
+						)}
+
+						{investment.status === "active" && (
+							<div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 border border-blue-200 dark:border-blue-800">
+								<h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
+									Investment Active
+								</h4>
+								<p className="text-sm text-blue-800 dark:text-blue-200">
+									Investment active and earning returns. Auto-completion when due.
 								</p>
 							</div>
 						)}
