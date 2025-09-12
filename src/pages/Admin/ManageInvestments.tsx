@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TrendingUp, Clock, CheckCircle, DollarSign } from "lucide-react";
+import { TrendingUp, Clock, CheckCircle, DollarSign, RefreshCw } from "lucide-react";
 import ManageInvestmentModal from "@/components/ManageInvestmentModal";
 
 interface User {
@@ -41,6 +41,7 @@ const ManageInvestments: React.FC = () => {
 	const [toggle, setToggle] = useState(false);
 	const [filter, setFilter] = useState<string>("all");
 	const [loading, setLoading] = useState(true);
+	const [lastRefresh, setLastRefresh] = useState<Date | null>(null);
 	const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
 	const toggleModal = (e: boolean) => {
@@ -55,46 +56,64 @@ const ManageInvestments: React.FC = () => {
 	const fetchInvestments = async () => {
 		setLoading(true);
 		try {
-			const res = await fetch(`${url}/transactions/investments`);
-			const data = await res.json();
+			// Fetch all investments and active investments with progress in parallel
+			const [allInvestmentsRes, activeInvestmentsRes] = await Promise.all([
+				fetch(`${url}/transactions/investments`),
+				fetch(`${url}/plans/investments/active`)
+			]);
 
-			if (res.ok) {
-				const allInvestments = data.filter((inv: ITransaction) => inv.type === "investment");
+			if (allInvestmentsRes.ok && activeInvestmentsRes.ok) {
+				const allData = await allInvestmentsRes.json();
+				const activeData = await activeInvestmentsRes.json();
 				
-				// Fetch current progressive interest for active investments
-				const investmentsWithProgress = await Promise.all(
-					allInvestments.map(async (inv: ITransaction) => {
-						if (inv.status === "active" && inv._id) {
-							try {
-								const progressRes = await fetch(`${url}/plans/investment/${inv._id}/progress`);
-								if (progressRes.ok) {
-									const progressData = await progressRes.json();
-									return {
-										...inv,
-										planData: {
-											...inv.planData,
-											currentInterest: progressData.currentInterest,
-											startDate: progressData.startDate,
-											endDate: progressData.endDate,
-										}
-									};
-								}
-							} catch (error) {
-								console.log("Error fetching progress for", inv._id);
+				const allInvestments = allData.filter((inv: ITransaction) => inv.type === "investment");
+				
+				// Create a map of active investments with progress data
+				const activeInvestmentsMap = new Map();
+				activeData.forEach((activeInv: any) => {
+					activeInvestmentsMap.set(activeInv._id, {
+						currentInterest: activeInv.currentInterest,
+						startDate: activeInv.planData.startDate,
+						endDate: activeInv.planData.endDate,
+					});
+				});
+
+				// Merge the data efficiently
+				const investmentsWithProgress = allInvestments.map((inv: ITransaction) => {
+					if (inv.status === "active" && activeInvestmentsMap.has(inv._id)) {
+						const progressData = activeInvestmentsMap.get(inv._id);
+						return {
+							...inv,
+							planData: {
+								...inv.planData,
+								currentInterest: progressData.currentInterest,
+								startDate: progressData.startDate,
+								endDate: progressData.endDate,
 							}
-						}
-						return inv;
-					})
-				);
+						};
+					}
+					return inv;
+				});
 				
 				setInvestments(investmentsWithProgress);
 			} else {
-				throw new Error(data.message);
+				throw new Error("Failed to fetch investments");
 			}
 		} catch (error) {
 			console.log(error);
+			// Fallback to basic fetch without progress data
+			try {
+				const res = await fetch(`${url}/transactions/investments`);
+				const data = await res.json();
+				if (res.ok) {
+					setInvestments(data.filter((inv: ITransaction) => inv.type === "investment"));
+				}
+			} catch (fallbackError) {
+				console.log("Fallback fetch also failed:", fallbackError);
+			}
 		} finally {
 			setLoading(false);
+			setLastRefresh(new Date());
 		}
 	};
 
@@ -102,13 +121,10 @@ const ManageInvestments: React.FC = () => {
 		fetchInvestments();
 	}, [toggle]);
 
-	// Auto-refresh every 10 seconds
-	useEffect(() => {
-		const interval = setInterval(() => {
-			fetchInvestments();
-		}, 10000);
-		return () => clearInterval(interval);
-	}, []);
+	// Manual refresh function
+	const handleManualRefresh = () => {
+		fetchInvestments();
+	};
 
 	const filteredInvestments = investments.filter((investment) => {
 		if (filter === "all") return true;
@@ -145,9 +161,26 @@ const ManageInvestments: React.FC = () => {
 		<div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
 			<div className="max-w-7xl mx-auto">
 				{/* Header */}
-				<div className="mb-8">
-					<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Manage Investments</h1>
-					<p className="text-gray-600 dark:text-gray-400">Monitor and manage all investment transactions</p>
+				<div className="mb-8 flex items-center justify-between">
+					<div>
+						<h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Manage Investments</h1>
+						<div className="flex flex-col sm:flex-row sm:items-center gap-2">
+							<p className="text-gray-600 dark:text-gray-400">Monitor and manage all investment transactions</p>
+							{lastRefresh && (
+								<span className="text-xs text-gray-500 dark:text-gray-500">
+									Last updated: {lastRefresh.toLocaleTimeString()}
+								</span>
+							)}
+						</div>
+					</div>
+					<button
+						onClick={handleManualRefresh}
+						disabled={loading}
+						className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg transition-colors"
+					>
+						<RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+						{loading ? 'Refreshing...' : 'Refresh Data'}
+					</button>
 				</div>
 
 				{/* Stats Cards */}

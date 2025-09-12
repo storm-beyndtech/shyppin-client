@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Clock, TrendingUp } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Clock, TrendingUp, RefreshCw } from 'lucide-react';
 import { formatCurrencyClean } from '@/utils/formatters';
 
 interface ProgressiveInterestProps {
@@ -63,19 +63,12 @@ const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 		}
 	};
 
-	// Smooth animation for interest growth
+	// Initialize animated interest when progress data first loads
 	useEffect(() => {
-		if (!progress) return;
-
-		const difference = progress.currentInterest - animatedInterest;
-		if (Math.abs(difference) > 0.01) {
-			const increment = difference * 0.1; // Smooth animation
-			const timer = setTimeout(() => {
-				setAnimatedInterest(prev => Math.round((prev + increment) * 100) / 100);
-			}, 100);
-			return () => clearTimeout(timer);
+		if (progress && progress.currentInterest !== undefined) {
+			setAnimatedInterest(progress.currentInterest);
 		}
-	}, [progress?.currentInterest, animatedInterest]);
+	}, [progress?.currentInterest]);
 
 	// Fetch progress on mount
 	useEffect(() => {
@@ -84,17 +77,38 @@ const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 		}
 	}, [investmentId]);
 
-	// Set up interval for periodic updates (separate from completion check)
+	// Client-side progressive calculation with smart refresh
 	useEffect(() => {
+		if (!progress || progress.isCompleted) return;
+
 		const interval = setInterval(() => {
-			// Only fetch if investment is not completed
-			if (!progress?.isCompleted) {
+			const now = new Date();
+			const startTime = new Date(progress.startDate).getTime();
+			const endTime = new Date(progress.endDate).getTime();
+			const currentTime = now.getTime();
+			
+			// Check if investment should be completed first
+			if (currentTime >= endTime) {
+				// Fetch fresh data when investment completes
 				fetchProgress();
+				return; // Don't calculate if we're fetching new data
 			}
-		}, refreshInterval);
+			
+			// Calculate progress based on time elapsed
+			const totalDuration = endTime - startTime;
+			const elapsedTime = Math.max(0, currentTime - startTime);
+			const progressRatio = Math.min(elapsedTime / totalDuration, 1);
+			
+			// Calculate current interest based on time progression
+			const calculatedInterest = progress.totalInterest * progressRatio;
+			const roundedInterest = Math.round(calculatedInterest * 100) / 100;
+			
+			// Update the animated interest directly (using functional update to avoid stale closure)
+			setAnimatedInterest(roundedInterest);
+		}, 1000); // Update every second
 
 		return () => clearInterval(interval);
-	}, [investmentId, refreshInterval]);
+	}, [progress?.startDate, progress?.endDate, progress?.totalInterest, progress?.isCompleted]);
 
 	if (loading) {
 		return (
@@ -128,12 +142,22 @@ const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 							Current Interest
 						</span>
 					</div>
-					{!progress.isCompleted && (
-						<div className="flex items-center gap-1 text-xs text-green-700 dark:text-green-300">
-							<Clock className="w-3 h-3" />
-							<span>{progress.timeRemaining}</span>
-						</div>
-					)}
+					<div className="flex items-center gap-2">
+						{!progress.isCompleted && (
+							<div className="flex items-center gap-1 text-xs text-green-700 dark:text-green-300">
+								<Clock className="w-3 h-3" />
+								<span>{progress.timeRemaining}</span>
+							</div>
+						)}
+						<button
+							onClick={fetchProgress}
+							disabled={loading}
+							className="p-1 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-800/20 rounded transition-colors"
+							title="Refresh interest data"
+						>
+							<RefreshCw className={`w-3 h-3 ${loading ? 'animate-spin' : ''}`} />
+						</button>
+					</div>
 				</div>
 				
 				<div className="text-2xl font-bold text-green-900 dark:text-green-100 mb-1">
