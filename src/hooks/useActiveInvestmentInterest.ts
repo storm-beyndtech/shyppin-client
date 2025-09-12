@@ -18,13 +18,11 @@ interface ActiveInvestmentData {
 
 interface UseActiveInvestmentInterestOptions {
   userId: string;
-  refreshInterval?: number; // in milliseconds, default 10 seconds
   enabled?: boolean;
 }
 
 export const useActiveInvestmentInterest = ({
   userId,
-  refreshInterval = 10000,
   enabled = true
 }: UseActiveInvestmentInterestOptions) => {
   const [data, setData] = useState<ActiveInvestmentData | null>(null);

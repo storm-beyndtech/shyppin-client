@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Clock, TrendingUp, RefreshCw } from 'lucide-react';
 import { formatCurrencyClean } from '@/utils/formatters';
 
@@ -12,7 +12,6 @@ interface ProgressiveInterestProps {
 		timeRemaining: string;
 		isCompleted: boolean;
 	};
-	refreshInterval?: number; // in milliseconds, default 10 seconds
 }
 
 interface InvestmentProgress {
@@ -31,7 +30,6 @@ interface InvestmentProgress {
 const ProgressiveInterest: React.FC<ProgressiveInterestProps> = ({
 	investmentId,
 	initialData,
-	refreshInterval = 10000, // 10 seconds default
 }) => {
 	const [progress, setProgress] = useState<InvestmentProgress | null>(
 		initialData ? {
