@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Check, Star, TrendingUp, Shield, Clock } from 'lucide-react';
-import { formatCurrency, formatROI } from '@/utils/formatters';
+import React, { useState, useEffect } from "react";
+import { Check, Shield } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { contextData } from "@/context/AuthContext";
 
 interface Plan {
 	_id: string;
@@ -17,18 +18,37 @@ const PricingSection: React.FC = () => {
 	const [plans, setPlans] = useState<Plan[]>([]);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
+	const navigate = useNavigate();
+	const { user } = contextData();
+
+	const handleGetStarted = () => {
+		if (user) {
+			navigate("/dashboard/investment-plan");
+		} else {
+			navigate("/login");
+		}
+	};
+
+	const handleViewAllPlans = () => {
+		if (user) {
+			navigate("/dashboard/investment-plan");
+		} else {
+			navigate("/login");
+		}
+	};
 
 	useEffect(() => {
 		const fetchPlans = async () => {
 			try {
-				const response = await fetch('/api/plans');
+				const API_BASE_URL = import.meta.env.VITE_REACT_APP_SERVER_URL || "http://localhost:5000/api";
+				const response = await fetch(`${API_BASE_URL}/plans`);
 				if (!response.ok) {
-					throw new Error('Failed to fetch plans');
+					throw new Error("Failed to fetch plans");
 				}
 				const data = await response.json();
-				setPlans(data.slice(0, 3)); // Show only first 3 plans
+				setPlans(data); // Show all plans
 			} catch (err) {
-				setError(err instanceof Error ? err.message : 'An error occurred');
+				setError(err instanceof Error ? err.message : "An error occurred");
 			} finally {
 				setLoading(false);
 			}
@@ -39,15 +59,18 @@ const PricingSection: React.FC = () => {
 
 	if (loading) {
 		return (
-			<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-slate-50/30 to-slate-50/20">
-				<div className="max-w-7xl mx-auto">
-					<div className="text-center mb-16">
+			<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+				<div className="max-w-6xl mx-auto">
+					<div className="text-center mb-12">
 						<div className="h-8 bg-gray-200 rounded-md w-64 mx-auto mb-4 animate-pulse"></div>
 						<div className="h-4 bg-gray-200 rounded-md w-96 mx-auto animate-pulse"></div>
 					</div>
-					<div className="grid md:grid-cols-3 gap-8">
+					<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 						{[1, 2, 3].map((i) => (
-							<div key={i} className="bg-white rounded-2xl p-8 border border-gray-200 animate-pulse">
+							<div
+								key={i}
+								className="bg-white/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-8 animate-pulse shadow-xl"
+							>
 								<div className="h-6 bg-gray-200 rounded mb-4"></div>
 								<div className="h-4 bg-gray-200 rounded mb-6"></div>
 								<div className="h-8 bg-gray-200 rounded mb-6"></div>
@@ -66,8 +89,8 @@ const PricingSection: React.FC = () => {
 
 	if (error) {
 		return (
-			<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-slate-50/30 to-slate-50/20">
-				<div className="max-w-7xl mx-auto text-center">
+			<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50">
+				<div className="max-w-6xl mx-auto text-center">
 					<p className="text-red-600">Failed to load pricing plans. Please try again later.</p>
 				</div>
 			</section>
@@ -75,110 +98,109 @@ const PricingSection: React.FC = () => {
 	}
 
 	return (
-		<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 via-slate-50/30 to-slate-50/20 overflow-hidden">
-			{/* Background Assets */}
+		<section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50/30 via-slate-50/50 to-blue-100/40 overflow-hidden">
+			{/* Floating Background Blobs */}
 			<div className="absolute inset-0 overflow-hidden">
-				<div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-100/20 to-blue-200/10 rounded-full blur-3xl"></div>
-				<div className="absolute top-1/2 -left-32 w-64 h-64 bg-gradient-to-tr from-blue-100/15 to-blue-200/10 rounded-full blur-2xl"></div>
-				<div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 w-48 h-48 bg-gradient-to-t from-blue-100/20 to-transparent rounded-full blur-2xl"></div>
+				{/* Medium floating blobs */}
+				<div className="absolute top-20 left-1/4 w-48 h-48 bg-gradient-to-br from-cyan-200/20 to-blue-300/15 rounded-full blur-2xl animate-pulse delay-500"></div>
+				<div className="absolute bottom-40 left-1/3 w-56 h-56 bg-gradient-to-tr from-blue-300/20 to-indigo-200/15 rounded-full blur-2xl animate-pulse delay-1500"></div>
+
+				{/* Small floating accents */}
+				<div className="absolute top-1/4 right-1/3 w-32 h-32 bg-gradient-to-br from-blue-400/25 to-cyan-300/20 rounded-full blur-xl animate-pulse delay-700"></div>
+				<div className="absolute bottom-1/3 left-1/2 w-40 h-40 bg-gradient-to-tr from-indigo-300/20 to-blue-400/15 rounded-full blur-xl animate-pulse delay-1200"></div>
 			</div>
 
-			<div className="relative max-w-7xl mx-auto">
+			<div className="relative max-w-6xl mx-auto">
 				{/* Header */}
 				<div className="text-center mb-16">
-					<h2 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-4 tracking-tight">
-						Investment <span className="text-blue-600">Plans</span>
+					<h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-4 tracking-tight bg-gradient-to-r from-blue-900 via-slate-800 to-blue-900 bg-clip-text text-transparent">
+						Investment Plans
 					</h2>
-					<p className="text-xl md:text-3xl text-gray-500 font-light max-w-5xl mx-auto italic leading-relaxed">
-						Choose the perfect plan to start your investment journey
+					<p className="text-gray-500 max-w-2xl mx-auto">
+						Choose investment strategy & start building your portfolio
 					</p>
 				</div>
 
-				{/* Pricing Cards */}
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-					{plans.map((plan, index) => (
-						<div key={plan._id} className="group relative">
-							{/* Popular Badge */}
-							{index === 1 && (
-								<div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
-									<div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg flex items-center">
-										<Star className="w-4 h-4 mr-1" />
-										Most Popular
-									</div>
-								</div>
-							)}
+				{/* Plans Grid */}
+				<div className="flex flex-wrap gap-6 justify-center">
+					{plans.map((plan: Plan) => {
+						return (
+							<div
+								key={plan._id}
+								className="w-full max-w-90 group relative bg-white/40 backdrop-blur-2xl border border-white/30 rounded-2xl p-8 hover:bg-white/60 hover:border-white/50 transition-all duration-500 cursor-pointer shadow-xl hover:shadow-2xl hover:-translate-y-2"
+								onClick={handleGetStarted}
+							>
+								{/* Glassmorphism overlay */}
+								<div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-2xl"></div>
 
-							{/* Pricing Card */}
-							<div className={`relative bg-white/90 backdrop-blur-sm p-8 rounded-2xl border transition-all duration-500 hover:shadow-2xl hover:-translate-y-2 ${
-								index === 1 
-									? 'border-blue-200 ring-2 ring-blue-100 hover:ring-blue-200 scale-105' 
-									: 'border-gray-200 hover:border-blue-200'
-							}`}>
-								{/* Plan Name */}
-								<div className="mb-6">
-									<h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-									<p className="text-gray-600 text-sm">{plan.description}</p>
-								</div>
+								{/* Content */}
+								<div className="relative z-10">
+									{/* Icon & Title */}
+									<div className="flex items-center space-x-4 mb-6">
+										<div className="p-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20">
+											<Shield className="w-6 h-6 text-slate-700" />
+										</div>
+										<h3 className="text-xl font-medium text-slate-900">{plan.name}</h3>
+									</div>
 
-								{/* ROI Display */}
-								<div className="mb-8">
-									<div className="flex items-baseline">
-										<span className="text-5xl font-extrabold text-gray-900">{formatROI(plan.roi, 0)}</span>
-										<span className="text-xl text-gray-500 ml-1">%</span>
+									{/* Price Display */}
+									<div className="mb-6">
+										<div className="text-4xl font-extrabold text-slate-900 mb-2">
+											${plan.minAmount.toLocaleString()}+
+										</div>
+										<div className="text-2xl font-light text-slate-900">
+											{plan.roi}
+											<span className="text-lg text-slate-500">% ROI</span>
+										</div>
 									</div>
-									<p className="text-gray-500 text-sm mt-1">Return on Investment</p>
-								</div>
 
-								{/* Min Amount & Duration */}
-								<div className="mb-8 space-y-3">
-									<div className="flex items-center text-gray-600">
-										<TrendingUp className="w-5 h-5 mr-3 text-blue-500" />
-										<span>Min. Investment: {formatCurrency(plan.minAmount)}</span>
-									</div>
-									<div className="flex items-center text-gray-600">
-										<Clock className="w-5 h-5 mr-3 text-blue-500" />
-										<span>Duration: {plan.duration}</span>
-									</div>
-									<div className="flex items-center text-gray-600">
-										<Shield className="w-5 h-5 mr-3 text-blue-500" />
-										<span>Secured Investment</span>
-									</div>
-								</div>
+									{/* Description */}
+									<p className="text-slate-600 mb-4 leading-relaxed text-sm">{plan.description}</p>
 
-								{/* Features */}
-								<div className="mb-8">
-									<h4 className="font-semibold text-gray-900 mb-4">Plan Features:</h4>
-									<ul className="space-y-3">
-										{plan.features.map((feature, featureIndex) => (
-											<li key={featureIndex} className="flex items-start">
-												<Check className="w-5 h-5 text-green-500 mr-3 mt-0.5 flex-shrink-0" />
-												<span className="text-gray-600 text-sm">{feature}</span>
-											</li>
+									{/* Duration */}
+									<div className="mb-6">
+										<div className="flex items-center space-x-3">
+											<div className="w-5 h-5 rounded-full bg-blue-500/20 flex items-center justify-center">
+												<Check className="w-3 h-3 text-blue-600" />
+											</div>
+											<span className="text-slate-600 text-sm font-medium">{plan.duration}</span>
+										</div>
+									</div>
+
+									{/* Features */}
+									<div className="space-y-3 mb-8">
+										{plan.features.map((feature: string, index: number) => (
+											<div key={index} className="flex items-center space-x-3">
+												<div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+													<Check className="w-3 h-3 text-emerald-600" />
+												</div>
+												<span className="text-slate-600 text-sm">{feature}</span>
+											</div>
 										))}
-									</ul>
+									</div>
+
+									{/* CTA Button */}
+									<button
+										className="w-full py-2.5 px-6 bg-slate-900/80 text-white font-medium rounded-lg transition-all duration-300 hover:bg-slate-900 backdrop-blur-sm border border-slate-800/20 hover:scale-105"
+										type="button"
+										aria-label={`Start investment with ${plan.name} plan`}
+									>
+										{user ? "Start Investment" : "Sign In to Invest"}
+									</button>
 								</div>
-
-								{/* CTA Button */}
-								<button className={`w-full py-4 px-6 rounded-xl font-semibold transition-all duration-300 ${
-									index === 1
-										? 'bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 shadow-lg hover:shadow-xl'
-										: 'bg-gray-900 text-white hover:bg-gray-800'
-								}`}>
-									Get Started
-								</button>
-
-								{/* Hover Effect */}
-								<div className="absolute inset-0 bg-gradient-to-br from-blue-400/5 to-blue-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 							</div>
-						</div>
-					))}
+						);
+					})}
 				</div>
 
 				{/* Bottom CTA */}
 				<div className="text-center mt-16">
-					<p className="text-gray-600 mb-6">Ready to start your investment journey?</p>
-					<button className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-4 rounded-xl font-semibold hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
-						View All Plans
+					<p className="text-slate-600 mb-6">Ready to start your investment journey?</p>
+					<button
+						onClick={handleViewAllPlans}
+						className="bg-slate-900/80 hover:bg-slate-900 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-slate-800/20 hover:scale-105"
+					>
+						{user ? "View All Plans" : "Sign In to Get Started"}
 					</button>
 				</div>
 			</div>
