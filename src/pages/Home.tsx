@@ -11,6 +11,7 @@ import Reviews from "@/components/Reviews";
 import { useSearchParams } from "react-router-dom";
 import { useEffect } from "react";
 import TradingEducation from "@/components/TradingEducation";
+import PricingSection from "@/components/Home/PricingSection";
 
 const Home: React.FC = () => {
 	const [searchParams] = useSearchParams();
@@ -25,6 +26,7 @@ const Home: React.FC = () => {
 			<Hero />
 			<StepsSection />
 			<TradingEducation />
+			<PricingSection />
 			<TradingViewWidget />
 			<InvestmentOverviewSection />
 			<MissionVision />
