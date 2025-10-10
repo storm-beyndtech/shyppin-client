@@ -60,7 +60,7 @@ const options: ApexOptions = {
   },
 
   xaxis: {
-    categories: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    categories: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   },
   legend: {
     position: 'top',
@@ -78,11 +78,11 @@ const ChartTwo: React.FC = () => {
   const state = {
     series: [
       {
-        name: 'Trades',
+        name: 'Shipments',
         data: [44, 55, 41, 67, 22, 43, 65],
       },
       {
-        name: 'Interests',
+        name: 'Revenue',
         data: [13, 23, 20, 8, 13, 27, 15],
       },
     ],

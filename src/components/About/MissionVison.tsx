@@ -28,9 +28,8 @@ export default function MissionVision() {
           >
             <h2 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-gray-300 mb-4 sm:mb-6">Our Mission</h2>
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-              At Profyt-Opt, our mission is to redefine investment by tokenizing real-world assets, making them easily
-              accessible and tradable across the globe. We are committed to enabling secure, borderless opportunities
-              for everyone — from first-time investors to seasoned institutions.
+              To revolutionize global freight logistics through technology, transparency, and trust. We believe every business 
+              deserves reliable, transparent, and affordable freight services that help them compete on a global scale.
             </p>
           </motion.div>
 
@@ -59,9 +58,9 @@ export default function MissionVision() {
           >
             <h2 className="text-4xl sm:text-5xl md:text-7xl font-semibold text-gray-300 mb-4 sm:mb-6">Our Vision</h2>
             <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
-              We envision a decentralized future where investing in tokenized assets is seamless, inclusive, and
-              empowering. Profyt-Opt aims to be a global pioneer in bridging traditional finance with blockchain
-              innovation — unlocking breakthrough opportunities for wealth creation.
+              To become the most trusted and innovative freight logistics platform in the world. We envision a future where 
+              international shipping is as simple as sending an email, with full transparency and real-time visibility 
+              throughout the entire supply chain.
             </p>
           </motion.div>
         </div>

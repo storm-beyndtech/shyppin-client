@@ -1,141 +1,140 @@
 import { motion } from "framer-motion";
 import {
-	HardHat,
+	Package,
 	ArrowRight,
 	BarChart3,
 	Globe,
-	Heart,
+	Truck,
 	Users,
-	Wheat,
-	Droplets,
-	Fuel,
-	Leaf,
+	Plane,
+	Ship,
+	Warehouse,
+	MapPin,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Static image imports (replace these with your actual images)
-import agricultureImage from "../../assets/agriculture.jpg";
-import miningImage from "../../assets/mining.jpg";
-import oilGasImage from "../../assets/oil-gas.jpg";
-import philanthropyImage from "../../assets/philanthropy.jpg";
+import ecommerceImage from "../../assets/agriculture.jpg";
+import manufacturingImage from "../../assets/mining.jpg";
+import retailImage from "../../assets/oil-gas.jpg";
+import technologyImage from "../../assets/philanthropy.jpg";
 
 const sectionsData = [
 	{
-		id: "agriculture",
-		title: "Agricultural Innovations",
+		id: "ecommerce",
+		title: "E-commerce & Direct-to-Consumer",
 		description:
-			"Sustainable farming solutions and agricultural innovations to feed the world while protecting our environment for future generations.",
-		icon: Wheat,
-		image: agricultureImage,
-		route: "/agriculture",
+			"Specialized logistics solutions for online retailers and D2C brands, from first-mile pickup to last-mile delivery with advanced tracking and customer communication.",
+		icon: Package,
+		image: ecommerceImage,
+		route: "/services",
 		color: "blue",
 		features: [
 			{
-				icon: Leaf,
-				title: "Sustainable Farming",
-				description: "Implementing eco-friendly agricultural practices and organic farming methods.",
+				icon: Truck,
+				title: "Last-Mile Delivery",
+				description: "Fast, reliable delivery to customers' doors with real-time tracking and notifications.",
 			},
 			{
 				icon: BarChart3,
-				title: "Crop Analytics",
-				description: "Advanced data analytics for optimizing crop yields and farm productivity.",
+				title: "Fulfillment Analytics",
+				description: "Data-driven insights to optimize your supply chain and reduce shipping costs.",
 			},
 			{
 				icon: Globe,
-				title: "Global Supply Chain",
-				description: "Connecting farmers to global markets through efficient supply chain networks.",
+				title: "Global Reach",
+				description: "International shipping solutions to expand your market globally.",
 			},
 		],
-		highlight: "Feeding the Future Sustainably",
-		highlightDesc: "Innovative solutions for modern agriculture challenges",
+		highlight: "E-commerce Excellence",
+		highlightDesc: "Powering online retail with seamless logistics",
 	},
 	{
-		id: "mining",
-		title: "Mining Investment & Engagement",
+		id: "manufacturing",
+		title: "Manufacturing & Industrial Logistics",
 		description:
-			"Evaluate the global mining sector, monitor the volatile metals market, mitigate risk, and align ESG goals with essential data, analytics, and insights.",
-		icon: HardHat,
-		image: miningImage,
-		route: "/mining",
+			"Comprehensive supply chain solutions for manufacturers, including raw material sourcing, production support, and finished goods distribution worldwide.",
+		icon: Warehouse,
+		image: manufacturingImage,
+		route: "/services",
 		color: "blue",
 		features: [
+			{
+				icon: Ship,
+				title: "Ocean Freight",
+				description: "Cost-effective shipping for heavy machinery and bulk materials worldwide.",
+			},
+			{
+				icon: Warehouse,
+				title: "Industrial Warehousing",
+				description: "Specialized storage and distribution facilities for manufacturing operations.",
+			},
+			{
+				icon: MapPin,
+				title: "Supply Chain Optimization",
+				description: "Strategic logistics planning to reduce costs and improve efficiency.",
+			},
+		],
+		highlight: "Industrial Excellence",
+		highlightDesc: "Supporting manufacturing with reliable logistics",
+	},
+	{
+		id: "retail",
+		title: "Retail & Distribution",
+		description:
+			"End-to-end logistics solutions for retail chains, from supplier management to store replenishment and seasonal inventory distribution.",
+		icon: Truck,
+		image: retailImage,
+		route: "/services",
+		color: "blue",
+		features: [
+			{
+				icon: Truck,
+				title: "Store Replenishment",
+				description: "Reliable delivery schedules to keep your stores fully stocked.",
+			},
 			{
 				icon: BarChart3,
-				title: "Market Analysis",
-				description: "Comprehensive insights into global mining markets and commodity trends.",
+				title: "Inventory Management",
+				description: "Advanced tracking and forecasting to optimize inventory levels.",
 			},
 			{
-				icon: Globe,
-				title: "Global Operations",
-				description: "Strategic mining investments across key resource-rich regions worldwide.",
-			},
-			{
-				icon: Leaf,
-				title: "Sustainable Mining Practices",
-				description: "Balancing resource extraction with environmental responsibility",
+				icon: MapPin,
+				title: "Multi-Location Distribution",
+				description: "Efficient distribution to multiple retail locations nationwide.",
 			},
 		],
-		highlight: "Responsible Resource Extraction",
-		highlightDesc: "Mining with environmental and social responsibility",
+		highlight: "Retail Success",
+		highlightDesc: "Keeping shelves stocked and customers satisfied",
 	},
 	{
-		id: "oil-gas",
-		title: "Oil & Gas Operations",
+		id: "technology",
+		title: "Technology & Electronics",
 		description:
-			"Leading energy solutions through innovative oil and gas exploration, production, and distribution while transitioning to cleaner energy alternatives.",
-		icon: Fuel,
-		image: oilGasImage,
-		route: "/oil-gas",
+			"Specialized handling for high-value technology products with secure transportation, climate control, and white-glove delivery services.",
+		icon: Plane,
+		image: technologyImage,
+		route: "/services",
 		color: "blue",
 		features: [
 			{
-				icon: Droplets,
-				title: "Exploration & Production",
-				description: "Advanced exploration techniques and efficient production methods.",
+				icon: Plane,
+				title: "Express Air Freight",
+				description: "Fast, secure shipping for time-sensitive technology products.",
 			},
 			{
-				icon: BarChart3,
-				title: "Energy Analytics",
-				description: "Data-driven insights for optimizing energy production and distribution.",
+				icon: Package,
+				title: "Secure Handling",
+				description: "Specialized packaging and handling for delicate electronics.",
 			},
-			{
-				icon: Leaf,
-				title: "Clean Energy Transition",
-				description: "Investing in renewable energy and sustainable practices.",
-			},
-		],
-		highlight: "Energy Innovation",
-		highlightDesc: "Powering the future with responsible energy solutions",
-	},
-	{
-		id: "philanthropy",
-		title: "Philanthropy",
-		description:
-			"Profyt-Opt Society showcases its dedication to investing in initiatives that enhance the well-being of individuals and communities nationwide.",
-		icon: Heart,
-		image: philanthropyImage,
-		route: "/philanthropy",
-		color: "blue",
-		features: [
 			{
 				icon: Users,
-				title: "Community Support",
-				description:
-					"Investing in local communities through education, health, and infrastructure initiatives.",
-			},
-			{
-				icon: Globe,
-				title: "Global Impact",
-				description: "Supporting international humanitarian efforts and sustainable development projects.",
-			},
-			{
-				icon: Heart,
-				title: "Building Better Communities",
-				description: "Supporting initiatives that create lasting positive impact",
+				title: "White-Glove Service",
+				description: "Premium delivery and installation services for high-value items.",
 			},
 		],
-		highlight: "Making a Difference",
-		highlightDesc: "Creating positive impact in communities worldwide",
+		highlight: "Tech Logistics Leader",
+		highlightDesc: "Protecting your technology investments in transit",
 	},
 ];
 

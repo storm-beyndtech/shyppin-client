@@ -39,7 +39,7 @@ const Hero: FC = () => {
 						transition={{ duration: 0.5 }}
 						className="text-white text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 leading-tight"
 					>
-						Profyt-Opt Discovery
+						Connecting the World, One Shipment at a Time
 					</motion.h1>
 
 					<motion.p
@@ -48,18 +48,24 @@ const Hero: FC = () => {
 						transition={{ duration: 0.5, delay: 0.2 }}
 						className="text-white text-lg leading-relaxed mb-8"
 					>
-						Profyt-Opt is committed to redefining how individuals and enterprises approach asset
-						transformation. We turn potential into progress, bridging innovation with practical solutions that
-						drive sustainable growth.
+						Since 2020, Shyppin has been simplifying global logistics for businesses of all sizes. 
+						We leverage cutting-edge technology and a global network of partners to provide 
+						enterprise-level logistics solutions at accessible prices.
 					</motion.p>
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.3 }}
+						className="flex flex-col sm:flex-row gap-4"
 					>
-						<Link to="/login">
+						<Link to="/quote">
 							<button className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors">
-								View Full Report <ChevronRight className="w-5 h-5" />
+								Get a Quote <ChevronRight className="w-5 h-5" />
+							</button>
+						</Link>
+						<Link to="/contact">
+							<button className="flex items-center gap-2 border-2 border-white text-white px-6 py-3 rounded-xl font-semibold hover:bg-white/10 transition-colors">
+								Contact Us <ChevronRight className="w-5 h-5" />
 							</button>
 						</Link>
 					</motion.div>

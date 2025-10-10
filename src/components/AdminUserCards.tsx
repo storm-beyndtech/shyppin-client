@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react';
-import { PiUsersThreeThin } from 'react-icons/pi';
+import { Truck, Package, Users } from 'lucide-react';
 
-export default function AdminUserCards() {
-  const [users, setUsers] = useState<any>(0);
-  const [activeUsers, setActiveUsers] = useState(0);
+export default function AdminShipmentCards() {
+  const [customers, setCustomers] = useState<any>(0);
+  const [activeShipments, setActiveShipments] = useState(156);
+  const [totalShipments, setTotalShipments] = useState(2847);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
-  const fetchUsers = async () => {
+  const fetchCustomers = async () => {
     try {
       const res = await fetch(`${url}/users`);
       const data = await res.json();
 
       if (res.ok) {
-        setUsers(data.length - 1);
-        setActiveUsers(data.length - 1);
+        setCustomers(data.length - 1);
       } else throw new Error(data.message);
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ export default function AdminUserCards() {
   };
 
   useEffect(() => {
-    fetchUsers();
+    fetchCustomers();
   }, []);
 
   return (
@@ -29,39 +29,39 @@ export default function AdminUserCards() {
       <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
           <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
-            {Number(users).toLocaleString('en-US')}
+            {Number(totalShipments).toLocaleString('en-US')}
           </h2>
-          <PiUsersThreeThin className="text-4xl text-blue-600" />
+          <Package className="text-4xl text-blue-600" />
         </div>
 
         <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
-          All Users
+          Total Shipments
         </p>
       </div>
 
       <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
           <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
-            {Number(0).toLocaleString('en-US')}
+            {Number(activeShipments).toLocaleString('en-US')}
           </h2>
-          <PiUsersThreeThin className="text-4xl text-rose-500" />
+          <Truck className="text-4xl text-green-500" />
         </div>
 
         <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
-          Banned Users
+          Active Shipments
         </p>
       </div>
 
       <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
           <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
-            {Number(activeUsers).toLocaleString('en-US')}
+            {Number(customers).toLocaleString('en-US')}
           </h2>
-          <PiUsersThreeThin className="text-4xl text-green-500" />
+          <Users className="text-4xl text-purple-500" />
         </div>
 
         <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
-          Active Users
+          Customers
         </p>
       </div>
     </div>

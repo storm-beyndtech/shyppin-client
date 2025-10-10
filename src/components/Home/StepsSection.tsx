@@ -1,51 +1,37 @@
 import {
-	UserPlus,
-	Shield,
-	CreditCard,
-	TrendingUp,
-	BarChart3,
-	Banknote,
-	ArrowRight,
+	Calculator,
+	Calendar,
+	MapPin,
 	CheckCircle,
+	ArrowRight,
+	Package,
 } from "lucide-react";
 
 const StepsSection = () => {
 	const steps = [
 		{
 			number: "01",
-			icon: <UserPlus className="w-6 h-6" strokeWidth={2} />,
-			title: "Register",
-			description: "Create your secure account in minutes with our simple registration process.",
+			icon: <Calculator className="w-6 h-6" strokeWidth={2} />,
+			title: "Request a Quote",
+			description: "Enter your shipment details and get instant pricing for air, ocean, or ground freight.",
 		},
 		{
 			number: "02",
-			icon: <Shield className="w-6 h-6" strokeWidth={2} />,
-			title: "Verify KYC",
-			description: "Complete your identity verification to ensure secure and compliant investing.",
+			icon: <Calendar className="w-6 h-6" strokeWidth={2} />,
+			title: "Book Your Shipment",
+			description: "Choose your service, schedule pickup, and upload any required documents.",
 		},
 		{
 			number: "03",
-			icon: <CreditCard className="w-6 h-6" strokeWidth={2} />,
-			title: "Deposit",
-			description: "Fund your account securely through multiple payment methods and channels.",
+			icon: <MapPin className="w-6 h-6" strokeWidth={2} />,
+			title: "Track in Real-Time",
+			description: "Monitor your cargo's journey with live updates and GPS tracking.",
 		},
 		{
 			number: "04",
-			icon: <TrendingUp className="w-6 h-6" strokeWidth={2} />,
-			title: "Earn",
-			description: "Choose from our curated earning options and start building your portfolio.",
-		},
-		{
-			number: "05",
-			icon: <BarChart3 className="w-6 h-6" strokeWidth={2} />,
-			title: "Track",
-			description: "Monitor your investments in real-time with our comprehensive dashboard.",
-		},
-		{
-			number: "06",
-			icon: <Banknote className="w-6 h-6" strokeWidth={2} />,
-			title: "Withdraw",
-			description: "Access your returns anytime with our flexible withdrawal options.",
+			icon: <Package className="w-6 h-6" strokeWidth={2} />,
+			title: "Delivery Confirmation",
+			description: "Receive proof of delivery and access all shipment documentation online.",
 		},
 	];
 
@@ -80,10 +66,10 @@ const StepsSection = () => {
 				{/* Header */}
 				<div className="mb-20">
 					<h2 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-4 tracking-tight">
-						How It <span className="text-gray-500">Works</span>
+						How Shyppin <span className="text-gray-500">Works</span>
 					</h2>
 					<p className="text-xl md:text-3xl text-gray-500 font-light max-w-5xl italic leading-relaxed">
-						Simple steps to get started with your investment portfolio.
+						Simple steps to ship your cargo anywhere in the world.
 					</p>
 				</div>
 

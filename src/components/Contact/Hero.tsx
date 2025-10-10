@@ -39,9 +39,7 @@ const Hero: FC = () => {
 						transition={{ duration: 0.5 }}
 						className="text-white text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 leading-tight"
 					>
-						Need Help?
-						<br />
-						Quicky Send a Message
+						Get in Touch
 					</motion.h1>
 
 					<motion.p
@@ -50,20 +48,22 @@ const Hero: FC = () => {
 						transition={{ duration: 0.5, delay: 0.2 }}
 						className="text-white text-lg leading-relaxed mb-8 max-w-xl"
 					>
-						Need help or more information about our services? You can reach us with a message. We will get
-						back to you instantly.
+						Our team is available 24/7 to answer your questions and support your shipping needs. 
+						Contact us today to learn how Shyppin can streamline your logistics.
 					</motion.p>
 
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.3 }}
+						className="flex flex-col sm:flex-row gap-4"
 					>
-						<Link to="/login">
-							<button className="flex items-center gap-2 bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-white/90 transition-colors">
-								View Full Report <ChevronRight className="w-5 h-5" />
-							</button>
-						</Link>
+						<div className="flex items-center gap-2 bg-white/10 text-white px-6 py-3 rounded-xl backdrop-blur-sm">
+							📞 +1 (888) 749-7746
+						</div>
+						<div className="flex items-center gap-2 bg-white/10 text-white px-6 py-3 rounded-xl backdrop-blur-sm">
+							✉️ support@shyppin.com
+						</div>
 					</motion.div>
 				</div>
 			</div>

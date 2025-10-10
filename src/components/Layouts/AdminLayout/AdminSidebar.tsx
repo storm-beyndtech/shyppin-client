@@ -5,16 +5,16 @@ import SidebarDropdown from "./SidebarDropdown";
 import {
 	Home,
 	Users,
-	BarChart2,
+	Package,
 	Globe,
 	MessageSquare,
 	LogOut,
 	Menu,
-	ShieldAlert,
+	Truck,
 	Settings,
-	ArrowUpFromLine,
-	ArrowDownFromLine,
-  Coins,
+	Plane,
+	Ship,
+	ClipboardList,
 } from "lucide-react";
 import { contextData } from "@/context/AuthContext";
 import DarkModeSwitcher from "@/components/UI/DarkModeSwitcher";
@@ -100,19 +100,20 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 					</ul>
 
 					<ul className="mb-10 flex flex-col gap-1.5">
-						{/* Investment Dropdown Menu */}
+						{/* Shipments Dropdown Menu */}
 						<SidebarDropdown
-							title="Investments"
-							icon={<BarChart2 strokeWidth={1.5} className="text-blue-500 text-xl" />}
+							title="Shipments"
+							icon={<Package strokeWidth={1.5} className="text-blue-500 text-xl" />}
 							links={[
-								{ label: "Manage Investments", href: "manage-investments" },
-								{ label: "Investment  History", href: "investment-history" },
+								{ label: "All Shipments", href: "all-shipments" },
+								{ label: "Active Shipments", href: "active-shipments" },
+								{ label: "Delivered Shipments", href: "delivered-shipments" },
 							]}
 						/>
 
-						{/* Users Dropdown Menu */}
+						{/* Customers Dropdown Menu */}
 						<SidebarDropdown
-							title="Users"
+							title="Customers"
 							icon={<Users strokeWidth={1.5} className="text-blue-500 text-xl" />}
 							links={[
 								{ label: "Active Users", href: "active-users" },
@@ -120,53 +121,28 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 							]}
 						/>
 
-						{/* Transactions drop down */}
+						{/* Services Dropdown */}
 						<SidebarDropdown
-							title="Manage Deposits"
-							icon={<ArrowUpFromLine strokeWidth={1.5} className="text-blue-500 text-xl" />}
+							title="Services"
+							icon={<Truck strokeWidth={1.5} className="text-blue-500 text-xl" />}
 							links={[
-								{ label: "Approved Deposits", href: "approved-deposits" },
-								{ label: "Pending Deposits", href: "pending-deposits" },
-								{ label: "Rejected Deposits", href: "rejected-deposits" },
+								{ label: "Air Freight", href: "air-freight" },
+								{ label: "Ocean Freight", href: "ocean-freight" },
+								{ label: "Ground Transport", href: "ground-transport" },
 							]}
 						/>
 
 						<SidebarDropdown
-							title="Manage Withdrawals"
-							icon={<ArrowDownFromLine strokeWidth={1.5} className="text-blue-500 text-xl" />}
+							title="Quote Management"
+							icon={<ClipboardList strokeWidth={1.5} className="text-blue-500 text-xl" />}
 							links={[
-								{ label: "Approved Withdrawals", href: "approved-withdrawals" },
-								{ label: "Pending Withdrawals", href: "pending-withdrawals" },
-								{ label: "Rejected Withdrawals", href: "rejected-withdrawals" },
+								{ label: "Pending Quotes", href: "pending-quotes" },
+								{ label: "Approved Quotes", href: "approved-quotes" },
+								{ label: "Quote History", href: "quote-history" },
 							]}
 						/>
 					</ul>
 
-					<ul className="flex flex-col gap-1.5">
-						<li>
-							<NavLink
-								to="/admin/kyc"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("kyc") && "bg-black"
-								}`}
-							>
-								<ShieldAlert strokeWidth={1.5} className="text-blue-500 text-xl" />
-								Kyc
-							</NavLink>
-            </li>
-            
-						<li>
-							<NavLink
-								to="/admin/plans"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("plans") && "bg-black"
-								}`}
-							>
-								<Coins strokeWidth={1.5} className="text-blue-500 text-xl" />
-								Manage Plans
-							</NavLink>
-						</li>
-					</ul>
 
 					<ul className="flex flex-col gap-1.5">
 						<li>

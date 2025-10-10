@@ -20,7 +20,7 @@ const Review = ({ quote, author, role, rating }: any) => {
 			<h4 className="font-medium text-gray-700 mb-2 text-sm">{role}</h4>
 			<p className="text-gray-700 text-sm leading-relaxed mb-3">{quote}</p>
 			<div className="flex items-center text-xs text-blue-600">
-				<span>Profyt-Opt Reviews</span>
+				<span>Shyppin Reviews</span>
 			</div>
 		</div>
 	);
@@ -30,85 +30,85 @@ export default function Reviews() {
 	const testimonials = [
 		{
 			quote:
-				"Solid regulatory foundation and comprehensive retirement planning. The personalized approach really sets them apart from other platforms.",
+				"Exceptional service for our international shipments. Their ocean freight solutions saved us 30% on shipping costs while maintaining reliability.",
 			author: "Alex Johnson",
-			role: "Retirement planning works for me",
+			role: "Ocean freight excellence",
 			rating: 5,
 		},
 		{
 			quote:
-				"Made investing accessible for everyone! Simple platform with diverse options for both active and hands-off investors.",
+				"Fast air freight delivery and real-time tracking made our urgent shipments stress-free. Highly recommend their services!",
 			author: "Sarah Chen",
-			role: "Investment diversity rocks!",
+			role: "Air freight reliability",
 			rating: 5,
 		},
 		{
 			quote:
-				"Impressed with the variety of portfolios and retirement accounts. Transparent fees and great flexibility for different investment styles.",
+				"Professional customs brokerage team handled all our documentation seamlessly. No delays, no hassles, just smooth operations.",
 			author: "Michael Rodriguez",
-			role: "Excellent investment options",
+			role: "Customs expertise",
 			rating: 4,
 		},
 		{
 			quote:
-				"Amazing professional support! Their retirement planning advisors are incredibly knowledgeable and helpful. THUMBS UP!",
+				"Amazing customer support! Their logistics experts are incredibly knowledgeable and always available when we need them.",
 			author: "Emma Thompson",
-			role: "Amazing retirement guidance",
+			role: "Outstanding support",
 			rating: 5,
 		},
 		{
 			quote:
-				"User-friendly tools with competitive returns. The automated rebalancing keeps my portfolio optimized without constant monitoring.",
+				"Ground transport network is impressive. Door-to-door delivery with competitive rates and excellent tracking visibility.",
 			author: "David Wilson",
-			role: "Smart automation features",
+			role: "Ground transport leader",
 			rating: 5,
 		},
 		{
-			quote: "The educational resources helped me understand investing better than I ever thought possible.",
+			quote: "The warehousing solutions helped us optimize our supply chain better than we ever thought possible.",
 			author: "Priya Patel",
-			role: "Learning made easy",
+			role: "Supply chain optimization",
 			rating: 4,
 		},
 		{
 			quote:
-				"User-friendly design, diverse portfolios, and excellent educational resources. A well-rounded ecosystem for wealth building.",
+				"Comprehensive freight solutions, competitive pricing, and excellent technology platform. A complete logistics partner.",
 			author: "James Williams",
-			role: "My Profyt-Opt experience",
+			role: "Complete logistics solution",
 			rating: 5,
 		},
 		{
 			quote:
-				"Recently started and very impressed! The investment guidance and retirement planning tools are exceptional.",
+				"Recently started using Shyppin and very impressed! Their freight forwarding expertise is exceptional.",
 			author: "Olivia Garcia",
-			role: "What an investment platform",
+			role: "Freight forwarding expert",
 			rating: 5,
 		},
 		{
 			quote:
-				"Great customer service and intuitive interface. Makes managing my retirement savings stress-free and efficient.",
+				"Great service and user-friendly tracking system. Makes managing our global shipments stress-free and efficient.",
 			author: "Robert Kim",
-			role: "Stress-free investing",
+			role: "Global shipping made easy",
 			rating: 5,
 		},
 		{
 			quote:
-				"Low fees, high-quality investment options, and excellent mobile app. Perfect for busy professionals like me.",
+				"Competitive rates, reliable service, and excellent mobile tracking. Perfect for busy supply chain managers like me.",
 			author: "Lisa Martinez",
-			role: "Perfect for professionals",
+			role: "Supply chain efficiency",
 			rating: 4,
 		},
 		{
 			quote:
-				"The goal-based investing feature helped me plan for my children's education and my own retirement simultaneously.",
+				"Multi-modal shipping solutions helped us streamline both our domestic and international logistics operations.",
 			author: "Thomas Anderson",
-			role: "Goal-based planning",
+			role: "Multi-modal expertise",
 			rating: 5,
 		},
 		{
 			quote:
-				"Transparent pricing and no hidden fees. The portfolio performance has exceeded my expectations consistently.",
+				"Transparent pricing and no hidden fees. The shipping performance has exceeded our expectations consistently.",
 			author: "Jennifer Lopez",
-			role: "Transparent and profitable",
+			role: "Transparent and reliable",
 			rating: 5,
 		},
 	];

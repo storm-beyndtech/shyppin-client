@@ -24,7 +24,7 @@ const Cta: FC = () => {
 								viewport={{ once: true }}
 								className="text-4xl md:text-5xl font-semibold mb-6 Poppins"
 							>
-								Global Impact
+								Ready to Ship?
 							</motion.h2>
 
 							<motion.p
@@ -34,8 +34,8 @@ const Cta: FC = () => {
 								viewport={{ once: true }}
 								className="text-white/90 text-lg mb-8 max-w-md"
 							>
-								We are a global, science driven, patient focused company. We are committed to transforming the
-								future of technology and innovation.
+								Join thousands of businesses worldwide who trust Shyppin for their freight logistics. 
+								Get instant quotes and start shipping smarter today.
 							</motion.p>
 
 							<motion.div
@@ -43,10 +43,17 @@ const Cta: FC = () => {
 								whileInView={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.5, delay: 0.3 }}
 								viewport={{ once: true }}
+								className="flex flex-col sm:flex-row gap-4"
 							>
 								<button className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-blue-50 transition-colors inline-flex items-center group">
-									Create an Account
+									Get a Quote
 									<span className="ml-2 bg-blue-500 text-white rounded-full p-3 group-hover:bg-blue-600 transition-colors">
+										<ArrowRight size={16} />
+									</span>
+								</button>
+								<button className="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center group">
+									Track Shipment
+									<span className="ml-2">
 										<ArrowRight size={16} />
 									</span>
 								</button>

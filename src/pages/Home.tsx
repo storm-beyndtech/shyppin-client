@@ -1,38 +1,23 @@
 import Hero from "../components/Home/Hero";
-import TradingViewWidget from "../components/TVWidget";
-import InvestorCard from "../components/Home/InvestorCard";
 import Cta from "../components/Home/Cta";
-import UnifiedBusinessSections from "../components/Home/UnifiedBusinessSections";
-import TransactionsSection from "../components/Home/TransactionsSection";
 import MissionVision from "../components/About/MissionVison";
 import StepsSection from "@/components/Home/StepsSection";
-import InvestmentOverviewSection from "@/components/Home/InvestmentOverviewSection";
 import Reviews from "@/components/Reviews";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
-import TradingEducation from "@/components/TradingEducation";
-import PricingSection from "@/components/Home/PricingSection";
+import FreightServicesSection from "@/components/Home/FreightServicesSection";
+import FreightFeaturesSection from "@/components/Home/FreightFeaturesSection";
+import StatsSection from "@/components/Home/StatsSection";
+import Map from "@/components/Home/Map";
 
 const Home: React.FC = () => {
-	const [searchParams] = useSearchParams();
-
-	useEffect(() => {
-		const ref = searchParams.get("ref");
-		if (ref) localStorage.setItem("referrer", ref);
-	}, []);
-
 	return (
 		<div className="min-h-screen">
 			<Hero />
+			<StatsSection />
+      <FreightFeaturesSection />
+      <Map />
 			<StepsSection />
-			<TradingEducation />
-			<PricingSection />
-			<TradingViewWidget />
-			<InvestmentOverviewSection />
+			<FreightServicesSection />
 			<MissionVision />
-			<UnifiedBusinessSections />
-			<InvestorCard />
-			<TransactionsSection />
 			<Reviews />
 			<Cta />
 		</div>
