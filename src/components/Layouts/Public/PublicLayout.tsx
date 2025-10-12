@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../Navbar"; // Adjust path as needed
 import Footer from "../../Footer"; // Adjust path as needed
-import WhatsAppButton from "@/components/UI/WhatsAppButton";
+// import WhatsAppButton from "@/components/UI/WhatsAppButton";
 
 interface PublicLayoutProps {
 	children: React.ReactNode;
@@ -23,7 +23,7 @@ const PublicLayout: React.FC<PublicLayoutProps> = ({ children }) => {
 			{!hideNavFooter && <Navbar />}
 			<main className="min-h-screen">{children}</main>
 			{!hideNavFooter && <Footer />}
-			<WhatsAppButton />
+			{/* <WhatsAppButton /> */}
 		</>
 	);
 };
