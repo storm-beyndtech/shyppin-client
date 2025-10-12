@@ -44,7 +44,7 @@ const Quote = () => {
 			setFormData({
 				...formData,
 				[parent]: {
-					...formData[parent as keyof typeof formData],
+					...((formData[parent as keyof typeof formData] as object) || {}),
 					[child]: value
 				}
 			});

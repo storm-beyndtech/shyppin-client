@@ -215,7 +215,6 @@ export default function AdminQuotes() {
       });
 
       if (response.ok) {
-        const updatedQuote = await response.json();
         setSuccess(`Quote ${selectedQuote.quoteNumber} submitted successfully!`);
         setTimeout(() => setSuccess(''), 5000);
         await fetchQuotes();
