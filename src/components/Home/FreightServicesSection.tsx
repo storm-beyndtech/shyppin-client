@@ -12,7 +12,11 @@ const FreightServicesSection: FC = () => {
 			title: "Air Freight",
 			description: "Express air cargo for time-critical shipments",
 			icon: Plane,
-			features: ["Fastest transit times globally (1-5 days)", "Priority handling for urgent cargo", "Global airline partnerships"],
+			features: [
+				"Fastest transit times globally (1-5 days)",
+				"Priority handling for urgent cargo",
+				"Global airline partnerships",
+			],
 			image: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05",
 		},
 		{
@@ -20,15 +24,23 @@ const FreightServicesSection: FC = () => {
 			title: "Ocean Freight",
 			description: "Cost-effective shipping for large-volume cargo",
 			icon: Ship,
-			features: ["Most economical for large volumes", "Suitable for heavy and oversized cargo", "Environmental efficiency"],
-			image: "https://images.unsplash.com/photo-1540946485063-a40da27545f8",
+			features: [
+				"Most economical for large volumes",
+				"Suitable for heavy and oversized cargo",
+				"Environmental efficiency",
+			],
+			image: "https://www.optimashipbroking.com/wp-content/uploads/2024/04/aerial-top2-1-scaled.jpg",
 		},
 		{
 			id: "land-freight",
 			title: "Ground Transportation",
 			description: "Flexible trucking solutions for regional delivery",
 			icon: Truck,
-			features: ["Flexible pickup and delivery schedules", "Last-mile delivery capabilities", "Real-time GPS tracking"],
+			features: [
+				"Flexible pickup and delivery schedules",
+				"Last-mile delivery capabilities",
+				"Real-time GPS tracking",
+			],
 			image: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7",
 		},
 		{
@@ -36,7 +48,11 @@ const FreightServicesSection: FC = () => {
 			title: "Warehousing & Distribution",
 			description: "Strategic storage and fulfillment solutions",
 			icon: Warehouse,
-			features: ["Reduce shipping costs with strategic positioning", "Scalable storage solutions", "Advanced inventory tracking"],
+			features: [
+				"Reduce shipping costs with strategic positioning",
+				"Scalable storage solutions",
+				"Advanced inventory tracking",
+			],
 			image: "https://images.unsplash.com/photo-1553413077-190dd305871c",
 		},
 	];
@@ -92,9 +108,7 @@ const FreightServicesSection: FC = () => {
 								<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
 									{service.title}
 								</h3>
-								<p className="text-gray-600 dark:text-gray-400 mb-4">
-									{service.description}
-								</p>
+								<p className="text-gray-600 dark:text-gray-400 mb-4">{service.description}</p>
 								<ul className="space-y-2 mb-6">
 									{service.features.map((feature, idx) => (
 										<li key={idx} className="flex items-center text-sm text-gray-600 dark:text-gray-400">

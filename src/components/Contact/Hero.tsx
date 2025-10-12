@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 import type { FC } from "react";
 import cryptoGlass from "../../assets/Futuristic_Glass_Cube.png";
-import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const Hero: FC = () => {
 	return (
@@ -46,25 +44,11 @@ const Hero: FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
-						className="text-white text-lg leading-relaxed mb-8 max-w-xl"
+						className="text-white text-lg leading-relaxed mb-8 max-w-2xl"
 					>
-						Our team is available 24/7 to answer your questions and support your shipping needs. 
-						Contact us today to learn how Shyppin can streamline your logistics.
+						Our team is available 24/7 to answer your questions and support your shipping needs. Contact us
+						today to learn how Shyppin can streamline your logistics.
 					</motion.p>
-
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5, delay: 0.3 }}
-						className="flex flex-col sm:flex-row gap-4"
-					>
-						<div className="flex items-center gap-2 bg-white/10 text-white px-6 py-3 rounded-xl backdrop-blur-sm">
-							📞 +1 (888) 749-7746
-						</div>
-						<div className="flex items-center gap-2 bg-white/10 text-white px-6 py-3 rounded-xl backdrop-blur-sm">
-							✉️ support@shyppin.com
-						</div>
-					</motion.div>
 				</div>
 			</div>
 		</section>

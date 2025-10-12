@@ -362,6 +362,34 @@ body {
 		scrollbar-width: none; /* Firefox */
 	}
 
+	/* Custom slim scrollbar for steps section */
+	.steps-scrollbar::-webkit-scrollbar {
+		height: 6px;
+	}
+
+	.steps-scrollbar::-webkit-scrollbar-track {
+		background: rgba(59, 130, 246, 0.1);
+		border-radius: 10px;
+		margin: 0 20px;
+	}
+
+	.steps-scrollbar::-webkit-scrollbar-thumb {
+		background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+		border-radius: 10px;
+		transition: all 0.3s ease;
+	}
+
+	.steps-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: linear-gradient(90deg, #1d4ed8, #1e40af);
+		transform: scaleY(1.2);
+	}
+
+	/* Firefox scrollbar styling */
+	.steps-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: #3b82f6 rgba(59, 130, 246, 0.1);
+	}
+
 	.pad {
 		@apply sm:px-16 px-5 sm:py-24 py-12;
 	}

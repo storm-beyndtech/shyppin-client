@@ -4,7 +4,6 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 // Pages
 import Home from "./pages/Home";
-import Support from "./pages/Support";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import About from "./pages/About";
@@ -21,10 +20,6 @@ import { contextData } from "./context/AuthContext";
 import PublicLayout from "./components/Layouts/Public/PublicLayout";
 import PageLoader from "./components/PageLoader";
 import Admin from "./pages/Admin/Admin";
-import ActiveUsers from "./pages/Admin/ActiveUsers";
-import BannedUsers from "./pages/Admin/BannedUsers";
-import SendMail from "./pages/Admin/SendMail";
-import AdminSettings from "./pages/Admin/AdminSettings";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 
 function App() {
@@ -59,10 +54,6 @@ function App() {
 					<Route path="/admin/" element={<AdminLayout />}>
 						<Route index element={<Admin />} />
 						<Route path="/admin/home" element={<Admin />} />
-						<Route path="/admin/active-users" element={<ActiveUsers />} />
-						<Route path="/admin/banned-users" element={<BannedUsers />} />
-						<Route path="/admin/mails" element={<SendMail />} />
-						<Route path="/admin/settings" element={<AdminSettings />} />
 					</Route>
 
 					{/* Redirect admin from public routes when needed */}
@@ -130,20 +121,15 @@ function App() {
 					</PublicLayout>
 				}
 			/>
-			<Route
-				path="/support"
-				element={
-					<PublicLayout>
-						<Support />
-					</PublicLayout>
-				}
-			/>
+
+			{/* Redirects for old financial platform routes */}
+			<Route path="/projects" element={<Navigate to="/services" replace />} />
+			<Route path="/reports" element={<Navigate to="/track" replace />} />
+			<Route path="/retirement" element={<Navigate to="/quote" replace />} />
+			<Route path="/events" element={<Navigate to="/contact" replace />} />
 
 			{/* Catch-all route */}
-			<Route
-				path="*"
-				element={<Navigate to={user?.isAdmin ? "/admin" : "/"} replace />}
-			/>
+			<Route path="*" element={<Navigate to={user?.isAdmin ? "/admin" : "/"} replace />} />
 		</Routes>
 	);
 }

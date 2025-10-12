@@ -3,26 +3,68 @@ import { Truck, Package, Users } from 'lucide-react';
 
 export default function AdminShipmentCards() {
   const [customers, setCustomers] = useState<any>(0);
-  const [activeShipments, setActiveShipments] = useState(156);
-  const [totalShipments, setTotalShipments] = useState(2847);
+  const [activeShipments, setActiveShipments] = useState(0);
+  const [totalShipments, setTotalShipments] = useState(0);
+  const [loading, setLoading] = useState(true);
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
-  const fetchCustomers = async () => {
+  const fetchData = async () => {
     try {
-      const res = await fetch(`${url}/users`);
-      const data = await res.json();
+      setLoading(true);
+      
+      // Fetch customers
+      const usersRes = await fetch(`${url}/users`);
+      const usersData = await usersRes.json();
+      if (usersRes.ok) {
+        setCustomers(usersData.length - 1); // Exclude admin
+      }
 
-      if (res.ok) {
-        setCustomers(data.length - 1);
-      } else throw new Error(data.message);
+      // Fetch shipments (with auth token from localStorage if available)
+      const token = localStorage.getItem('token');
+      const shipmentsRes = await fetch(`${url}/shipments`, {
+        headers: {
+          ...(token && { 'x-auth-token': token })
+        }
+      });
+      
+      if (shipmentsRes.ok) {
+        const shipmentsData = await shipmentsRes.json();
+        setTotalShipments(shipmentsData.length);
+        const active = shipmentsData.filter((shipment: any) => 
+          shipment.status !== 'delivered' && shipment.status !== 'exception'
+        ).length;
+        setActiveShipments(active);
+      } else {
+        // If auth fails, set default values (since shipments require auth)
+        setTotalShipments(0);
+        setActiveShipments(0);
+      }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchCustomers();
+    fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-4 mb-4">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg animate-pulse">
+            <div className="w-full flex flex-row-reverse items-end justify-between">
+              <div className="h-10 w-16 bg-gray-300 dark:bg-gray-600 rounded"></div>
+              <div className="h-10 w-10 bg-gray-300 dark:bg-gray-600 rounded"></div>
+            </div>
+            <div className="h-3 w-20 bg-gray-300 dark:bg-gray-600 rounded"></div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-4 mb-4">

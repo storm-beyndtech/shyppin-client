@@ -5,65 +5,65 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const testimonials = [
 	{
 		id: 1,
-		text: "Profyt-Opt has consistently demonstrated leadership in Australia's mining sector. Their long-term commitment to sustainable iron ore exploration has set a benchmark in the industry.",
+		text: "Shyppin has transformed our global supply chain. Their real-time tracking and competitive ocean freight rates have reduced our shipping costs by 30% while improving delivery times across Asia-Pacific routes.",
 		author: "Michael J.",
-		position: "Mining Consultant",
+		position: "Logistics Director",
 		image:
 			"https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXZhdGFyfGVufDB8fDB8fHww",
 	},
 	{
 		id: 2,
-		text: "We've worked with Profyt-Opt on multiple infrastructure projects in the Pilbara. Their attention to safety, innovation, and efficiency is second to none.",
+		text: "Working with Shyppin has been a game-changer for our international expansion. Their air freight solutions and customs expertise made entering new markets seamless and stress-free.",
 		author: "Sarah L.",
-		position: "Engineering Project Manager",
+		position: "Supply Chain Manager",
 		image:
 			"https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXZhdGFyfGVufDB8fDB8fHww",
 	},
 	{
 		id: 3,
-		text: "From mineral extraction to beef production, Profyt-Opt's integrated approach to natural resource management is impressive. Their work with Roy Hill is transformative.",
+		text: "From e-commerce fulfillment to bulk cargo shipments, Shyppin's technology platform provides complete visibility. Their 24/7 support team always delivers when we need them most.",
 		author: "David N.",
-		position: "Resource Economist",
+		position: "Operations Manager",
 		image:
 			"https://images.unsplash.com/photo-1654110455429-cf322b40a906?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXZhdGFyfGVufDB8fDB8fHww",
 	},
 	{
 		id: 4,
-		text: "Profyt-Opt's investment in agriculture, especially in premium wagyu beef and dairy operations, proves their dedication to quality and sustainability.",
+		text: "Shyppin's ground transportation network has revolutionized our last-mile delivery. Their commitment to sustainability and efficiency aligns perfectly with our company values.",
 		author: "Emma R.",
-		position: "Agricultural Export Specialist",
+		position: "Freight Coordinator",
 		image:
 			"https://images.unsplash.com/photo-1640951613773-54706e06851d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: 5,
-		text: "The Roy Hill operation is a world-class mining venture, and Profyt-Opt's role in pioneering it cannot be overstated. Their vision created jobs and lasting impact.",
+		text: "As a growing business, we needed a freight partner who could scale with us. Shyppin's global network and competitive pricing have supported our expansion into 15 new countries.",
 		author: "Andrew F.",
-		position: "Logistics & Supply Chain Director",
+		position: "International Trade Director",
 		image:
 			"https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: 6,
-		text: "Profyt-Opt is not just a mining company—they're nation builders. Their legacy in the Pilbara and contributions to Australian industry are inspirational.",
+		text: "Shyppin's expertise in customs regulations and documentation has eliminated delays in our import operations. Their proactive communication keeps us informed every step of the way.",
 		author: "Julie T.",
-		position: "Government Affairs Advisor",
+		position: "Import/Export Specialist",
 		image:
 			"https://images.unsplash.com/photo-1601455763557-db1bea8a9a5a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: 7,
-		text: "I've dealt with many companies in the cattle and farming sector, but few show the same level of innovation and long-term planning as Profyt-Opt.",
+		text: "The digital transformation Shyppin brought to our shipping processes is remarkable. Real-time tracking, automated documentation, and intelligent routing have streamlined our entire operation.",
 		author: "Luke S.",
-		position: "Agricultural Investor",
+		position: "Supply Chain Analyst",
 		image:
 			"https://plus.unsplash.com/premium_photo-1691784781482-9af9bce05096?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzN8fGF2YXRhcnxlbnwwfHwwfHx8MA%3D%3D",
 	},
 	{
 		id: 8,
-		text: "What stands out about Profyt-Opt is their ability to combine tradition with innovation—bringing together heritage cattle stations and cutting-edge resource development.",
+		text: "What sets Shyppin apart is their innovative approach to traditional logistics challenges. They combine cutting-edge technology with deep industry expertise to deliver exceptional results.",
 		author: "Naomi K.",
-		position: "Corporate Strategy Consultant",
+		position: "Procurement Manager",
 		image:
 			"https://plus.unsplash.com/premium_photo-1688350839154-1a131bccd78a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTAxfHxhdmF0YXJ8ZW58MHx8MHx8fDA%3D",
 	},
@@ -155,7 +155,7 @@ export default function Testimonials() {
 						Don't take our <span className="text-blue-500">word for it!</span>
 					</h2>
 					<p className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium text-gray-800">
-						Hear it from our partners.
+						Hear it from our clients.
 					</p>
 				</div>
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import type { FC } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
@@ -25,38 +25,22 @@ const Navbar: FC = () => {
 					<Link to="/about" className="text-sm font-medium hover:text-blue-100">
 						About
 					</Link>
-					<Link to="/projects" className="text-sm font-medium hover:text-blue-100">
-						Projects
+					<Link to="/services" className="text-sm font-medium hover:text-blue-100">
+						Services
 					</Link>
-					<Link to="/reports" className="text-sm font-medium hover:text-blue-100">
-						Annual Report
+					<Link to="/track" className="text-sm font-medium hover:text-blue-100">
+						Track Shipment
 					</Link>
-					<Link to="/support" className="text-sm font-medium hover:text-blue-100">
-						Support
+					<Link to="/quote" className="text-sm font-medium hover:text-blue-100">
+						Get Quote
 					</Link>
-					<Link to="/retirement" className="text-sm font-medium hover:text-blue-100">
-						Retirement
-					</Link>
-					<Link to="/events" className="text-sm font-medium hover:text-blue-100">
-						Event
+					<Link to="/contact" className="text-sm font-medium hover:text-blue-100">
+						Contact
 					</Link>
 					<div className="flex items-center space-x-3">
 						<div className="cursor-pointer">
 							<GTranslateProvider />
 						</div>
-						<Link
-							to="/login"
-							className="flex items-center h-10 bg-blue-500 text-white  text-sm font-medium px-4 py-1.5 rounded-xl hover:bg-blue-800  transition-colors text-center"
-						>
-							Sign in
-						</Link>
-						<Link
-							to="/signup"
-							className="flex items-center h-10 bg-white text-black  text-sm font-medium px-4 py-1.5 rounded-xl hover:bg-white/90  transition-colors text-center"
-						>
-							Create an Account
-							<ArrowRight className="w-4 h-4 ml-2" />
-						</Link>
 					</div>
 				</div>
 
@@ -87,36 +71,18 @@ const Navbar: FC = () => {
 						<Link to="/about" className="text-sm font-medium hover:text-blue-500">
 							About
 						</Link>
-						<Link to="/projects" className="text-sm font-medium hover:text-blue-500">
-							Projects
+						<Link to="/services" className="text-sm font-medium hover:text-blue-500">
+							Services
 						</Link>
-						<Link to="/reports" className="text-sm font-medium hover:text-blue-500">
-							Annual Report
+						<Link to="/track" className="text-sm font-medium hover:text-blue-500">
+							Track Shipment
 						</Link>
-						<Link to="/support" className="text-sm font-medium hover:text-blue-500">
-							Support
+						<Link to="/quote" className="text-sm font-medium hover:text-blue-500">
+							Get Quote
 						</Link>
-						<Link to="/retirement" className="text-sm font-medium hover:text-blue-500">
-							Retirement
+						<Link to="/contact" className="text-sm font-medium hover:text-blue-500">
+							Contact
 						</Link>
-						<Link to="/events" className="text-sm font-medium hover:text-blue-500">
-							Event
-						</Link>
-
-						<div className="flex flex-col space-y-2 mt-4">
-							<Link
-								to="/signup"
-								className="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-blue-600/90 transition-colors text-center"
-							>
-								Create an Account
-							</Link>
-							<Link
-								to="/login"
-								className="bg-white border border-gray-300 text-gray-600 text-sm font-medium px-4 py-2 rounded-xl transition-colors text-center"
-							>
-								Sign in
-							</Link>
-						</div>
 					</div>
 				</motion.div>
 			)}

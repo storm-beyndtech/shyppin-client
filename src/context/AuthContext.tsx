@@ -10,13 +10,17 @@ export const AuthProvider = ({ children }: any) => {
   const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
   const location = useLocation();
 
-  const login = (userData: any) => {
+  const login = (userData: any, token?: string) => {
     setUser(userData);
     localStorage.setItem('user', JSON.stringify(userData));
+    if (token) {
+      localStorage.setItem('token', token);
+    }
   };
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setUser(null);
   };
 

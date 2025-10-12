@@ -1,5 +1,5 @@
 import { Star } from "lucide-react";
-import { AnimatedSection } from "./UI/animated-section";
+import { AnimatedSection } from "../UI/animated-section";
 
 const Review = ({ quote, author, role, rating }: any) => {
 	return (
@@ -30,83 +30,83 @@ export default function Reviews() {
 	const testimonials = [
 		{
 			quote:
-				"Exceptional service for our international shipments. Their ocean freight solutions saved us 30% on shipping costs while maintaining reliability.",
+				"Outstanding ocean freight service! Shyppin delivered our cargo safely and on time. The tracking system kept us informed every step of the way.",
 			author: "Alex Johnson",
-			role: "Ocean freight excellence",
+			role: "Global shipping excellence",
 			rating: 5,
 		},
 		{
 			quote:
-				"Fast air freight delivery and real-time tracking made our urgent shipments stress-free. Highly recommend their services!",
+				"Made international shipping accessible for our small business! Simple platform with competitive rates for air and ocean freight.",
 			author: "Sarah Chen",
-			role: "Air freight reliability",
+			role: "Small business friendly",
 			rating: 5,
 		},
 		{
 			quote:
-				"Professional customs brokerage team handled all our documentation seamlessly. No delays, no hassles, just smooth operations.",
+				"Impressed with the variety of shipping options and transparent pricing. Great flexibility for different cargo types and urgent deliveries.",
 			author: "Michael Rodriguez",
-			role: "Customs expertise",
+			role: "Excellent shipping options",
 			rating: 4,
 		},
 		{
 			quote:
-				"Amazing customer support! Their logistics experts are incredibly knowledgeable and always available when we need them.",
+				"Amazing customer support! Their logistics team is incredibly knowledgeable and helped us navigate complex customs requirements. THUMBS UP!",
 			author: "Emma Thompson",
-			role: "Outstanding support",
+			role: "Amazing logistics support",
 			rating: 5,
 		},
 		{
 			quote:
-				"Ground transport network is impressive. Door-to-door delivery with competitive rates and excellent tracking visibility.",
+				"User-friendly tracking tools with reliable delivery times. The automated notifications keep our supply chain optimized without constant monitoring.",
 			author: "David Wilson",
-			role: "Ground transport leader",
+			role: "Smart tracking features",
 			rating: 5,
 		},
 		{
-			quote: "The warehousing solutions helped us optimize our supply chain better than we ever thought possible.",
+			quote: "The shipping guides helped me understand international logistics better than I ever thought possible.",
 			author: "Priya Patel",
-			role: "Supply chain optimization",
+			role: "Learning made easy",
 			rating: 4,
 		},
 		{
 			quote:
-				"Comprehensive freight solutions, competitive pricing, and excellent technology platform. A complete logistics partner.",
+				"User-friendly platform, diverse shipping solutions, and excellent customer service. A well-rounded ecosystem for global trade.",
 			author: "James Williams",
-			role: "Complete logistics solution",
+			role: "My Shyppin experience",
 			rating: 5,
 		},
 		{
 			quote:
-				"Recently started using Shyppin and very impressed! Their freight forwarding expertise is exceptional.",
+				"Recently started using Shyppin and very impressed! The freight guidance and customs handling are exceptional.",
 			author: "Olivia Garcia",
-			role: "Freight forwarding expert",
+			role: "What a shipping platform",
 			rating: 5,
 		},
 		{
 			quote:
-				"Great service and user-friendly tracking system. Makes managing our global shipments stress-free and efficient.",
+				"Great customer service and intuitive tracking interface. Makes managing our international shipments stress-free and efficient.",
 			author: "Robert Kim",
-			role: "Global shipping made easy",
+			role: "Stress-free shipping",
 			rating: 5,
 		},
 		{
 			quote:
-				"Competitive rates, reliable service, and excellent mobile tracking. Perfect for busy supply chain managers like me.",
+				"Competitive rates, reliable delivery times, and excellent mobile app. Perfect for busy logistics professionals like me.",
 			author: "Lisa Martinez",
-			role: "Supply chain efficiency",
+			role: "Perfect for professionals",
 			rating: 4,
 		},
 		{
 			quote:
-				"Multi-modal shipping solutions helped us streamline both our domestic and international logistics operations.",
+				"The multi-modal shipping options helped us optimize costs for both urgent air freight and bulk ocean cargo simultaneously.",
 			author: "Thomas Anderson",
-			role: "Multi-modal expertise",
+			role: "Multi-modal solutions",
 			rating: 5,
 		},
 		{
 			quote:
-				"Transparent pricing and no hidden fees. The shipping performance has exceeded our expectations consistently.",
+				"Transparent pricing and no hidden fees. The delivery performance has exceeded our expectations consistently across all routes.",
 			author: "Jennifer Lopez",
 			role: "Transparent and reliable",
 			rating: 5,

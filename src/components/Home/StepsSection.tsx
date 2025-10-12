@@ -73,13 +73,13 @@ const StepsSection = () => {
 					</p>
 				</div>
 
-				{/* Steps Grid */}
-				<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+				{/* Steps Container */}
+				<div className="flex flex-col lg:flex-row lg:overflow-x-auto lg:gap-8 gap-8 lg:pb-6 steps-scrollbar">
 					{steps.map((step, index) => (
-						<div key={index} className="group relative">
+						<div key={index} className="group relative lg:flex-shrink-0 lg:w-96">
 							{/* Connection Line - Desktop Only */}
 							{index < steps.length - 1 && (
-								<div className="hidden lg:block absolute top-16 left-full w-10 h-0.5 bg-gradient-to-r from-blue-300 to-transparent transform translate-x-0 z-0">
+								<div className="hidden lg:block absolute top-16 left-full w-8 h-0.5 bg-gradient-to-r from-blue-300 to-transparent transform translate-x-0 z-0">
 									<div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1">
 										<ArrowRight className="w-4 h-4 text-blue-400" strokeWidth={2} />
 									</div>

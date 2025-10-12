@@ -91,8 +91,14 @@ const Login: React.FC = () => {
 			// Option 1: Send with loginType indicator
 			const data = await sendRequest("/users/login", "POST", loginData);
 
-			login(data.user);
-			navigate("/dashboard");
+			login(data.user, data.token);
+			
+			// Redirect based on user role
+			if (data.user.isAdmin) {
+				navigate("/admin");
+			} else {
+				navigate("/dashboard");
+			}
 		} catch (error) {
 			const loginError = error as LoginError;
 			setErrors({ submit: loginError.message });

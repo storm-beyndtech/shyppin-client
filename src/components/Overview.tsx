@@ -1,4 +1,4 @@
-import { Building2, Landmark, Mountain, Hammer, Leaf, Users2, Tractor, BadgeDollarSign } from "lucide-react";
+import { Building2, Globe, Ship, Truck, Plane, Users2, BarChart3, Shield } from "lucide-react";
 
 const Section = ({ icon: Icon, title, children }: any) => (
 	<div className="flex flex-col gap-3 border-t border-gray-200 pt-8 text-justify">
@@ -22,60 +22,65 @@ const Overview = () => {
 				<div className="grid gap-12 md:grid-cols-2">
 					<Section icon={Building2} title="Company Overview">
 						<p>
-							Profyt-Opt. LTD. is a private Australian company with a long history in the Pilbara and iron
-							ore sector, as well as cattle agro-farming. Its mission is to bring Australia's mineral and
-							agricultural products to global markets.
+							Shyppin is a modern freight forwarding company founded in 2020 to simplify global logistics 
+							for businesses of all sizes. We leverage cutting-edge technology and a worldwide network of 
+							partners to provide enterprise-level logistics solutions at accessible prices.
 						</p>
 					</Section>
 
-					<Section icon={Mountain} title="Iron Ore Ventures">
+					<Section icon={Ship} title="Ocean Freight Excellence">
 						<p>
-							Known as the “flying prospector,” Blue Scope pioneered aerial mineral exploration. Its
-							discoveries led to ten major mines, including Hope Downs in partnership with Rio Tinto. Roy
-							Hill, a $10B iron ore operation, is now Australia's largest single mine at 55M tonnes/year.
+							Our ocean freight services connect major ports worldwide with reliable LCL and FCL solutions. 
+							We maintain partnerships with leading carriers to ensure competitive rates and flexible 
+							scheduling for your cargo, regardless of size or destination.
 						</p>
 					</Section>
 
-					<Section icon={Hammer} title="Innovation & Impact">
+					<Section icon={Plane} title="Air Freight Solutions">
 						<p>
-							Roy Hill introduced Australia’s first pink truck fleet for breast cancer awareness and surpasses
-							industry norms in female workforce participation.
+							When time is critical, our air freight services deliver. From express overnight shipments 
+							to consolidated cargo flights, we provide fast, secure transportation with real-time tracking 
+							and dedicated customer support throughout the journey.
 						</p>
 					</Section>
 
-					<Section icon={Landmark} title="Joint Ventures & Ownership">
+					<Section icon={Truck} title="Ground Transportation">
 						<p>
-							HPPL owns 70% of Roy Hill Holdings. The remaining 30% is owned by Marubeni, POSCO, and China
-							Steel.
+							Our extensive ground network covers major trade routes with reliable trucking, rail, and 
+							last-mile delivery services. We ensure seamless door-to-door delivery with competitive 
+							rates and flexible scheduling options.
 						</p>
 					</Section>
 
-					<Section icon={Tractor} title="Agricultural Growth">
+					<Section icon={Globe} title="Global Network & Reach">
 						<p>
-							From premium cattle stations to wagyu beef and dairy through Bannister Downs, HPPL is reshaping
-							the future of Australian agriculture with investments in natural fertilizers via Sirius
-							Minerals.
+							With operations spanning over 200 countries and territories, Shyppin's network of trusted 
+							partners ensures your cargo reaches its destination safely and on time, no matter where 
+							in the world your business needs to go.
 						</p>
 					</Section>
 
-					<Section icon={BadgeDollarSign} title="Reinvestment Strategy">
+					<Section icon={BarChart3} title="Technology & Innovation">
 						<p>
-							Profits from mining are funneled into long-term agricultural development, with the goal of
-							becoming a top-tier beef and dairy producer.
+							Our proprietary logistics platform provides real-time tracking, automated documentation, 
+							and intelligent route optimization. Advanced analytics help you make informed decisions 
+							about your supply chain and logistics operations.
 						</p>
 					</Section>
 
-					<Section icon={Users2} title="Leadership & Vision">
+					<Section icon={Users2} title="Expert Team & Support">
 						<p>
-							The Executive Chairman since 1992 has led HPPL through mining diversification and agricultural
-							excellence, emphasizing sustainability and growth.
+							Our team of logistics professionals brings decades of combined experience in freight 
+							forwarding, customs brokerage, and supply chain management. We're available 24/7 to 
+							support your shipping needs and resolve any challenges.
 						</p>
 					</Section>
 
-					<Section icon={Leaf} title="Legacy & Future">
+					<Section icon={Shield} title="Security & Compliance">
 						<p>
-							With investments in agriculture and mining, HPPL honors its legacy while building a
-							forward-looking business focused on impact, innovation, and Australian ownership.
+							Your cargo is protected by comprehensive insurance coverage and strict security protocols. 
+							We maintain full compliance with international shipping regulations and customs requirements 
+							to ensure smooth, hassle-free deliveries.
 						</p>
 					</Section>
 				</div>

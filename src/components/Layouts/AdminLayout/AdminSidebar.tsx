@@ -1,19 +1,13 @@
 import { useEffect, useRef } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../../../assets/logo.png";
-import SidebarDropdown from "./SidebarDropdown";
 import {
 	Home,
 	Users,
 	Package,
 	Globe,
-	MessageSquare,
 	LogOut,
 	Menu,
-	Truck,
-	Settings,
-	Plane,
-	Ship,
 	ClipboardList,
 } from "lucide-react";
 import { contextData } from "@/context/AuthContext";
@@ -100,74 +94,49 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 					</ul>
 
 					<ul className="mb-10 flex flex-col gap-1.5">
-						{/* Shipments Dropdown Menu */}
-						<SidebarDropdown
-							title="Shipments"
-							icon={<Package strokeWidth={1.5} className="text-blue-500 text-xl" />}
-							links={[
-								{ label: "All Shipments", href: "all-shipments" },
-								{ label: "Active Shipments", href: "active-shipments" },
-								{ label: "Delivered Shipments", href: "delivered-shipments" },
-							]}
-						/>
+						{/* Shipments */}
+						<li>
+							<NavLink
+								to="/admin/shipments"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
+									pathname.includes("shipments") && "bg-black"
+								}`}
+							>
+								<Package strokeWidth={1.5} className="text-blue-500 text-xl" />
+								Shipments
+							</NavLink>
+						</li>
 
-						{/* Customers Dropdown Menu */}
-						<SidebarDropdown
-							title="Customers"
-							icon={<Users strokeWidth={1.5} className="text-blue-500 text-xl" />}
-							links={[
-								{ label: "Active Users", href: "active-users" },
-								{ label: "Banned Users", href: "banned-users" },
-							]}
-						/>
+						{/* Customers */}
+						<li>
+							<NavLink
+								to="/admin/customers"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
+									pathname.includes("customers") && "bg-black"
+								}`}
+							>
+								<Users strokeWidth={1.5} className="text-blue-500 text-xl" />
+								Customers
+							</NavLink>
+						</li>
 
-						{/* Services Dropdown */}
-						<SidebarDropdown
-							title="Services"
-							icon={<Truck strokeWidth={1.5} className="text-blue-500 text-xl" />}
-							links={[
-								{ label: "Air Freight", href: "air-freight" },
-								{ label: "Ocean Freight", href: "ocean-freight" },
-								{ label: "Ground Transport", href: "ground-transport" },
-							]}
-						/>
-
-						<SidebarDropdown
-							title="Quote Management"
-							icon={<ClipboardList strokeWidth={1.5} className="text-blue-500 text-xl" />}
-							links={[
-								{ label: "Pending Quotes", href: "pending-quotes" },
-								{ label: "Approved Quotes", href: "approved-quotes" },
-								{ label: "Quote History", href: "quote-history" },
-							]}
-						/>
+						{/* Contact/Quotes */}
+						<li>
+							<NavLink
+								to="/admin/quotes"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
+									pathname.includes("quotes") && "bg-black"
+								}`}
+							>
+								<ClipboardList strokeWidth={1.5} className="text-blue-500 text-xl" />
+								Quote Requests
+							</NavLink>
+						</li>
 					</ul>
 
 
 					<ul className="flex flex-col gap-1.5">
-						<li>
-							<NavLink
-								to="/admin/mails"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("mails") && "bg-black"
-								}`}
-							>
-								<MessageSquare strokeWidth={1.5} className="text-blue-500 text-xl" />
-								Mails
-							</NavLink>
-						</li>
 
-						<li>
-							<NavLink
-								to="/admin/settings"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("settings") && "bg-black"
-								}`}
-							>
-								<Settings strokeWidth={1.5} className="text-blue-500 text-xl" />
-								Settings
-							</NavLink>
-						</li>
 
 						<li
 							className="cursor-pointer text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black"

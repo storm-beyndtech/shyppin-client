@@ -9,8 +9,8 @@ export default function AboutSection() {
 					{/* Left side - Image */}
 					<div className="w-full md:w-1/3 bg-black relative overflow-hidden h-64 md:h-auto mb-6 md:mb-0">
 						<motion.img
-							src="https://images.pexels.com/photos/3183148/pexels-photo-3183148.jpeg?auto=compress&cs=tinysrgb&w=600"
-							alt="Modern office space with people"
+							src="https://images.pexels.com/photos/262353/pexels-photo-262353.jpeg?auto=compress&cs=tinysrgb&w=600"
+							alt="Container ships in port - global logistics operations"
 							className="w-full h-full object-cover opacity-80 grayscale"
 							initial={{ scale: 1.1 }}
 							whileInView={{ scale: 1 }}
@@ -20,7 +20,7 @@ export default function AboutSection() {
 
 					{/* Right side - Blue background with content */}
 					<div className="w-full md:w-2/3 bg-blue-500 text-white p-6 sm:p-8 md:p-10 lg:p-12">
-						<h3 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">About Profyt-Opt</h3>
+						<h3 className="text-base sm:text-lg font-medium mb-3 sm:mb-4">About Shyppin</h3>
 
 						<motion.h2
 							className="text-4xl lg:text-5xl font-semibold mb-4 sm:mb-6"
@@ -28,28 +28,29 @@ export default function AboutSection() {
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6 }}
 						>
-							Resource Innovation
+							Pioneering Excellence in Global Logistics
 						</motion.h2>
 
 						<motion.p
-							className="text-base sm:text-lg mb-8 sm:mb-12 text-justify"
+							className="text-base sm:text-lg mb-6 sm:mb-8 text-justify"
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.6, delay: 0.2 }}
 						>
-							Profyt-Opt is a proud Australian company with a rich history of pioneering mineral
-							resource exploration, mining, and agricultural innovation. We specialize in delivering
-							sustainable growth across iron ore mining, oil & gas, construction, and premium agriculture.
+							Since 2020, Shyppin has been simplifying global logistics for businesses of all sizes. 
+							We leverage cutting-edge technology and a worldwide network of trusted partners to provide 
+							enterprise-level logistics solutions at accessible prices.
 						</motion.p>
 
 						<motion.p
 							className="text-base sm:text-lg mb-8 sm:mb-12 text-justify"
 							initial={{ opacity: 0, y: 20 }}
 							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.6, delay: 0.2 }}
+							transition={{ duration: 0.6, delay: 0.3 }}
 						>
-							We are committed to driving economic development through strategic investments and innovative
-							resource management in Australia's Pilbara region and beyond.
+							Our mission is to continue providing top-tier services in the freight industry, maintaining 
+							the quality and professionalism that has made us a trusted partner for businesses worldwide. 
+							We specialize in air freight, ocean freight, ground transportation, and comprehensive logistics solutions.
 						</motion.p>
 
 						{/* Stats */}
@@ -58,36 +59,36 @@ export default function AboutSection() {
 								className="text-left max-sm:max-w-32"
 								initial={{ opacity: 0, y: 20 }}
 								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, delay: 0.3 }}
+								transition={{ duration: 0.6, delay: 0.4 }}
 							>
 								<h3 className="text-4xl md:text-5xl font-bold">
-									10<span className="text-3xl">+</span>
+									200<span className="text-3xl">+</span>
 								</h3>
-								<p className="text-xs sm:text-sm mt-2">Major Iron Ore Mines Developed</p>
+								<p className="text-xs sm:text-sm mt-2">Countries & Territories Served</p>
 							</motion.div>
 
 							<motion.div
 								className="text-left max-sm:max-w-32"
 								initial={{ opacity: 0, y: 20 }}
 								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, delay: 0.4 }}
+								transition={{ duration: 0.6, delay: 0.5 }}
 							>
 								<h3 className="text-4xl md:text-5xl font-bold">
-									50 <span className="text-3xl">+</span>
+									24<span className="text-3xl">/7</span>
 								</h3>
-								<p className="text-xs sm:text-sm mt-2">Years in Mining and Agriculture</p>
+								<p className="text-xs sm:text-sm mt-2">Customer Support</p>
 							</motion.div>
 
 							<motion.div
 								className="text-left"
 								initial={{ opacity: 0, y: 20 }}
 								whileInView={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, delay: 0.5 }}
+								transition={{ duration: 0.6, delay: 0.6 }}
 							>
 								<h3 className="text-4xl md:text-5xl font-bold">
-									70% <span className="text-3xl">+</span>
+									99<span className="text-3xl">%</span>
 								</h3>
-								<p className="text-xs sm:text-sm mt-2">Ownership Stake in Roy Hill</p>
+								<p className="text-xs sm:text-sm mt-2">On-Time Delivery Rate</p>
 							</motion.div>
 						</div>
 

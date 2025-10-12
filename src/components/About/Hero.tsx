@@ -1,37 +1,41 @@
 import { motion } from "framer-motion";
 import type { FC } from "react";
-import cryptoGlass from "../../assets/Futuristic_Glass_Cube.png";
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Hero: FC = () => {
 	return (
-		<section className="relative sm:min-h-[500px] w-full py-16 md:py-24 overflow-hidden bg-gradient-to-b from-blue-700 to-blue-50/10 text-white">
-			{/* Floating Background Cubes */}
-			<motion.img
-				src={cryptoGlass}
-				alt="crypto illustration"
-				className="absolute top-0 right-0 w-60 md:w-80 opacity-50 blur-md pointer-events-none select-none"
-				animate={{ y: [0, -30, 0] }}
-				transition={{
-					duration: 3,
-					repeat: Infinity,
-					ease: "easeInOut",
-				}}
-			/>
-			<motion.img
-				src={cryptoGlass}
-				alt="crypto illustration"
-				className="absolute bottom-0 left-0 w-60 md:w-80 opacity-50 blur-md pointer-events-none select-none"
-				animate={{ y: [0, 30, 0] }}
-				transition={{
-					duration: 3,
-					repeat: Infinity,
-					ease: "easeInOut",
-				}}
-			/>
+		<section className="relative sm:min-h-[500px] w-full py-16 md:py-24 overflow-hidden text-white grid place-content-center">
+			{/* Video Background */}
+			<div className="absolute inset-0 z-0">
+				<video
+					autoPlay
+					muted
+					loop
+					playsInline
+					className="w-full h-full object-cover"
+					onError={(e) => {
+						// Fallback: hide video and show gradient background
+						e.currentTarget.style.display = "none";
+						e.currentTarget.parentElement!.style.background =
+							"linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)";
+					}}
+				>
+					{/* Primary source - Port cranes video from Optima about page */}
+					<source src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/cranes-unloading.mp4" type="video/mp4" />
+					{/* Backup source - Professional shipping/maritime operations */}
+					<source src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/optima-home-hero-02.mp4" type="video/mp4" />
+					{/* Additional backup - Container shipping/logistics */}
+					<source src="https://cdn.pixabay.com/video/2019/05/17/23759-337232393_large.mp4" type="video/mp4" />
+				</video>
+				{/* Dark overlay for better text readability */}
+				<div className="absolute inset-0 bg-black/70"></div>
+				{/* Fallback gradient background */}
+				<div className="absolute inset-0 bg-gradient-to-b from-blue-700 via-blue-600 to-blue-800 -z-10"></div>
+			</div>
 
-			<div className="max-w-7xl mx-auto px-6 md:px-12">
+			{/* Main Content */}
+			<div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
 				<div className="flex flex-col items-start text-left max-w-4xl">
 					<motion.h1
 						initial={{ opacity: 0, y: 20 }}

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import type { FC } from "react";
-import cryptoGlass from "../../assets/Futuristic_Glass_Cube.png";
 
 const Cta: FC = () => {
 	return (
@@ -34,8 +33,8 @@ const Cta: FC = () => {
 								viewport={{ once: true }}
 								className="text-white/90 text-lg mb-8 max-w-md"
 							>
-								Join thousands of businesses worldwide who trust Shyppin for their freight logistics. 
-								Get instant quotes and start shipping smarter today.
+								Join thousands of businesses worldwide who trust Shyppin for their freight logistics. Get
+								instant quotes and start shipping smarter today.
 							</motion.p>
 
 							<motion.div
@@ -45,15 +44,15 @@ const Cta: FC = () => {
 								viewport={{ once: true }}
 								className="flex flex-col sm:flex-row gap-4"
 							>
-								<button className="bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-blue-50 transition-colors inline-flex items-center group">
+								<button className="gap-3 w-fit bg-white text-black px-6 py-3 rounded-full font-medium hover:bg-blue-50 transition-colors inline-flex items-center group">
 									Get a Quote
-									<span className="ml-2 bg-blue-500 text-white rounded-full p-3 group-hover:bg-blue-600 transition-colors">
+									<span className=" bg-blue-500 text-white rounded-full p-3 group-hover:bg-blue-600 transition-colors">
 										<ArrowRight size={16} />
 									</span>
 								</button>
-								<button className="border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center group">
+								<button className="gap-3 w-fit border-2 border-white text-white px-6 py-3 rounded-full font-medium hover:bg-white/10 transition-colors inline-flex items-center group">
 									Track Shipment
-									<span className="ml-2">
+									<span className="">
 										<ArrowRight size={16} />
 									</span>
 								</button>
@@ -76,17 +75,14 @@ const Cta: FC = () => {
 
 									{/* Placeholder for the device image */}
 									<img
-										src={cryptoGlass || "/placeholder.svg"}
+										src={
+											"https://cdn.prod.website-files.com/647068704f90b915daf19034/64c241634a9b193611e78fdd_ezgif.com-resizenow_700x700.gif"
+										}
 										alt="Innovative device"
 										className="relative z-10 max-h-[350px] w-auto object-contain"
 									/>
 								</div>
 							</motion.div>
-
-							{/* Background elements - constrained */}
-							<div className="absolute bottom-0 right-0 max-w-full overflow-hidden">
-								<div className="text-blue-500/10 text-[120px] font-bold leading-none">Blue.</div>
-							</div>
 						</div>
 					</div>
 				</motion.div>
