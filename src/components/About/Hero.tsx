@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const Hero: FC = () => {
 	return (
-		<section className="relative sm:min-h-[500px] w-full py-16 md:py-24 overflow-hidden text-white grid place-content-center">
+		<section className="relative sm:min-h-[500px] w-full py-16 md:py-24 overflow-hidden text-white">
 			{/* Video Background */}
 			<div className="absolute inset-0 z-0">
 				<video
@@ -22,9 +22,15 @@ const Hero: FC = () => {
 					}}
 				>
 					{/* Primary source - Port cranes video from Optima about page */}
-					<source src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/cranes-unloading.mp4" type="video/mp4" />
+					<source
+						src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/cranes-unloading.mp4"
+						type="video/mp4"
+					/>
 					{/* Backup source - Professional shipping/maritime operations */}
-					<source src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/optima-home-hero-02.mp4" type="video/mp4" />
+					<source
+						src="https://www.optimashipbroking.com/wp-content/uploads/2024/05/optima-home-hero-02.mp4"
+						type="video/mp4"
+					/>
 					{/* Additional backup - Container shipping/logistics */}
 					<source src="https://cdn.pixabay.com/video/2019/05/17/23759-337232393_large.mp4" type="video/mp4" />
 				</video>
@@ -35,13 +41,13 @@ const Hero: FC = () => {
 			</div>
 
 			{/* Main Content */}
-			<div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-				<div className="flex flex-col items-start text-left max-w-4xl">
+			<div className="relative z-10 px-6 md:px-12">
+				<div className="">
 					<motion.h1
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5 }}
-						className="text-white text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 leading-tight"
+						className="max-w-2xl text-white text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6 leading-tight"
 					>
 						Connecting the World, One Shipment at a Time
 					</motion.h1>
@@ -50,11 +56,11 @@ const Hero: FC = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.5, delay: 0.2 }}
-						className="text-white text-lg leading-relaxed mb-8"
+						className="max-w-4xl text-white text-lg leading-relaxed mb-8"
 					>
-						Since 2020, Shyppin has been simplifying global logistics for businesses of all sizes. 
-						We leverage cutting-edge technology and a global network of partners to provide 
-						enterprise-level logistics solutions at accessible prices.
+						Since 2020, Shyppin has been simplifying global logistics for businesses of all sizes. We leverage
+						cutting-edge technology and a global partner network to provide enterprise-level logistics
+						solutions at accessible prices.
 					</motion.p>
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}

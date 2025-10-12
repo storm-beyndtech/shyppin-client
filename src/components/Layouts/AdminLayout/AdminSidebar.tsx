@@ -9,6 +9,7 @@ import {
 	LogOut,
 	Menu,
 	ClipboardList,
+	Mail,
 } from "lucide-react";
 import { contextData } from "@/context/AuthContext";
 import DarkModeSwitcher from "@/components/UI/DarkModeSwitcher";
@@ -47,7 +48,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 	return (
 		<aside
 			ref={sidebar}
-			className={`text-xs absolute left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden bg-bodydark1 lg:dark:bg-bodydark1/40 duration-300 ease-linear lg:static lg:translate-x-0 ${
+			className={`text-xs absolute left-0 top-0 z-50 flex h-screen w-72 flex-col overflow-y-hidden bg-gray-900 dark:bg-gray-950 border-r border-gray-700 dark:border-gray-800 duration-300 ease-linear lg:static lg:translate-x-0 ${
 				sidebarOpen ? "translate-x-0" : "-translate-x-full"
 			}`}
 		>
@@ -73,7 +74,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 						<li>
 							<NavLink
 								to="/"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black`}
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800`}
 							>
 								<Globe strokeWidth={1.5} className="text-blue-500 text-xl" />
 								Main Website
@@ -83,8 +84,8 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 						<li>
 							<NavLink
 								to="/admin"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname === "/admin" && "bg-black"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800 ${
+									pathname === "/admin" && "bg-gray-800 dark:bg-gray-800"
 								}`}
 							>
 								<Home strokeWidth={1.5} className="text-blue-500 text-xl" />
@@ -98,8 +99,8 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 						<li>
 							<NavLink
 								to="/admin/shipments"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("shipments") && "bg-black"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800 ${
+									pathname.includes("shipments") && "bg-gray-800 dark:bg-gray-800"
 								}`}
 							>
 								<Package strokeWidth={1.5} className="text-blue-500 text-xl" />
@@ -111,8 +112,8 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 						<li>
 							<NavLink
 								to="/admin/customers"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("customers") && "bg-black"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800 ${
+									pathname.includes("customers") && "bg-gray-800 dark:bg-gray-800"
 								}`}
 							>
 								<Users strokeWidth={1.5} className="text-blue-500 text-xl" />
@@ -124,12 +125,25 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 						<li>
 							<NavLink
 								to="/admin/quotes"
-								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black ${
-									pathname.includes("quotes") && "bg-black"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800 ${
+									pathname.includes("quotes") && "bg-gray-800 dark:bg-gray-800"
 								}`}
 							>
 								<ClipboardList strokeWidth={1.5} className="text-blue-500 text-xl" />
 								Quote Requests
+							</NavLink>
+						</li>
+
+						{/* Mail */}
+						<li>
+							<NavLink
+								to="/admin/mail"
+								className={`text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800 ${
+									pathname.includes("mail") && "bg-gray-800 dark:bg-gray-800"
+								}`}
+							>
+								<Mail strokeWidth={1.5} className="text-blue-500 text-xl" />
+								Email Campaigns
 							</NavLink>
 						</li>
 					</ul>
@@ -139,7 +153,7 @@ export default function AdminSidebar({ sidebarOpen, setSidebarOpen }: SidebarPro
 
 
 						<li
-							className="cursor-pointer text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-black dark:hover:bg-black"
+							className="cursor-pointer text-xs group relative flex items-center gap-2.5 rounded-sm py-2.5 px-3 text-gray-300 font-montserrat duration-300 ease-in-out hover:bg-gray-800 dark:hover:bg-gray-800"
 							onClick={() => logout()}
 						>
 							<LogOut strokeWidth={1.5} className="text-blue-500 text-xl" />

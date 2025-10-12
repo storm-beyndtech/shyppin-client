@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Package, Truck, Plane, MapPin, CheckCircle, Clock, AlertCircle } from "lucide-react";
+import { Search, Package, Truck, Plane, MapPin, CheckCircle, AlertCircle } from "lucide-react";
 
 const Tracking = () => {
 	const [trackingNumber, setTrackingNumber] = useState("");
@@ -32,7 +32,7 @@ const Tracking = () => {
 		setError("");
 
 		try {
-			const response = await fetch(`${import.meta.env.VITE_REACT_APP_SERVER_URL}/api/shipments/track/${trackingNumber}`);
+			const response = await fetch(`${import.meta.env.VITE_REACT_APP_SERVER_URL}/shipments/track/${trackingNumber}`);
 			const data = await response.json();
 
 			if (response.ok) {
@@ -42,8 +42,10 @@ const Tracking = () => {
 				setShipmentData(null);
 			}
 		} catch (err) {
-			setError("Failed to track shipment. Please try again.");
+			const errorMessage = err instanceof Error ? err.message : 'Network error occurred';
+			setError(`Failed to track shipment: ${errorMessage}`);
 			setShipmentData(null);
+			console.error('Error tracking shipment:', err);
 		} finally {
 			setLoading(false);
 		}

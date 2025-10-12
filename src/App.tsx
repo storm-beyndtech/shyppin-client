@@ -20,6 +20,10 @@ import { contextData } from "./context/AuthContext";
 import PublicLayout from "./components/Layouts/Public/PublicLayout";
 import PageLoader from "./components/PageLoader";
 import Admin from "./pages/Admin/Admin";
+import AdminShipments from "./pages/Admin/AdminShipments";
+import AdminCustomers from "./pages/Admin/AdminCustomers";
+import AdminQuotes from "./pages/Admin/AdminQuotes";
+import AdminMail from "./pages/Admin/AdminMail";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 
 function App() {
@@ -54,6 +58,10 @@ function App() {
 					<Route path="/admin/" element={<AdminLayout />}>
 						<Route index element={<Admin />} />
 						<Route path="/admin/home" element={<Admin />} />
+						<Route path="/admin/shipments" element={<AdminShipments />} />
+						<Route path="/admin/customers" element={<AdminCustomers />} />
+						<Route path="/admin/quotes" element={<AdminQuotes />} />
+						<Route path="/admin/mail" element={<AdminMail />} />
 					</Route>
 
 					{/* Redirect admin from public routes when needed */}

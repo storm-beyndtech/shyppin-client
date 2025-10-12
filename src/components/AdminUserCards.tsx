@@ -11,17 +11,22 @@ export default function AdminShipmentCards() {
   const fetchData = async () => {
     try {
       setLoading(true);
+      const token = localStorage.getItem('token');
       
-      // Fetch customers
-      const usersRes = await fetch(`${url}/users`);
-      const usersData = await usersRes.json();
-      if (usersRes.ok) {
-        setCustomers(usersData.length - 1); // Exclude admin
+      // Fetch customers from real API endpoint
+      const customersRes = await fetch(`${url}/api/customers`, {
+        headers: {
+          ...(token && { 'x-auth-token': token })
+        }
+      });
+      
+      if (customersRes.ok) {
+        const customersData = await customersRes.json();
+        setCustomers(customersData.length);
       }
 
-      // Fetch shipments (with auth token from localStorage if available)
-      const token = localStorage.getItem('token');
-      const shipmentsRes = await fetch(`${url}/shipments`, {
+      // Fetch shipments
+      const shipmentsRes = await fetch(`${url}/api/shipments`, {
         headers: {
           ...(token && { 'x-auth-token': token })
         }
@@ -34,10 +39,6 @@ export default function AdminShipmentCards() {
           shipment.status !== 'delivered' && shipment.status !== 'exception'
         ).length;
         setActiveShipments(active);
-      } else {
-        // If auth fails, set default values (since shipments require auth)
-        setTotalShipments(0);
-        setActiveShipments(0);
       }
     } catch (error) {
       console.log(error);
@@ -54,7 +55,7 @@ export default function AdminShipmentCards() {
     return (
       <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-4 mb-4">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg animate-pulse">
+          <div key={i} className="flex flex-col gap-2 p-3 rounded-lg bg-gray-700 dark:border-gray-700 border-gray-600 dark:bg-gray-800 border shadow-lg animate-pulse">
             <div className="w-full flex flex-row-reverse items-end justify-between">
               <div className="h-10 w-16 bg-gray-300 dark:bg-gray-600 rounded"></div>
               <div className="h-10 w-10 bg-gray-300 dark:bg-gray-600 rounded"></div>
@@ -68,41 +69,41 @@ export default function AdminShipmentCards() {
 
   return (
     <div className="grid grid-cols-3 max-lg:grid-cols-1 gap-4 mb-4">
-      <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
+      <div className="flex flex-col gap-2 p-3 rounded-lg bg-gray-700 dark:border-gray-700 border-gray-600 dark:bg-gray-800 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
-          <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
+          <h2 className="text-4xl font-medium text-gray-100 dark:text-white">
             {Number(totalShipments).toLocaleString('en-US')}
           </h2>
           <Package className="text-4xl text-blue-600" />
         </div>
 
-        <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
+        <p className="text-xs font-light flex text-gray-300 dark:text-gray-200">
           Total Shipments
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
+      <div className="flex flex-col gap-2 p-3 rounded-lg bg-gray-700 dark:border-gray-700 border-gray-600 dark:bg-gray-800 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
-          <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
+          <h2 className="text-4xl font-medium text-gray-100 dark:text-white">
             {Number(activeShipments).toLocaleString('en-US')}
           </h2>
           <Truck className="text-4xl text-green-500" />
         </div>
 
-        <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
+        <p className="text-xs font-light flex text-gray-300 dark:text-gray-200">
           Active Shipments
         </p>
       </div>
 
-      <div className="flex flex-col gap-2 p-3 rounded-lg bg-white dark:border-gray-900 border-gray-200 dark:bg-gray-950/70 border shadow-lg">
+      <div className="flex flex-col gap-2 p-3 rounded-lg bg-gray-700 dark:border-gray-700 border-gray-600 dark:bg-gray-800 border shadow-lg">
         <div className="w-full flex flex-row-reverse items-end justify-between">
-          <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
+          <h2 className="text-4xl font-medium text-gray-100 dark:text-white">
             {Number(customers).toLocaleString('en-US')}
           </h2>
           <Users className="text-4xl text-purple-500" />
         </div>
 
-        <p className="text-xs font-light flex text-gray-600 dark:text-gray-300">
+        <p className="text-xs font-light flex text-gray-300 dark:text-gray-200">
           Customers
         </p>
       </div>

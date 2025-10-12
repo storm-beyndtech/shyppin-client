@@ -1,6 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import AdminShipmentCards from '@/components/AdminUserCards';
 
 export default function Admin() {
+  const navigate = useNavigate();
+
   return (
     <div className="space-y-6">
       <div className="mb-6">
@@ -15,27 +18,36 @@ export default function Admin() {
       <AdminShipmentCards />
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-gray-950/70 border border-gray-200 dark:border-gray-900 rounded-lg p-6 shadow-lg">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <div className="bg-gray-800 dark:bg-gray-900 border border-gray-600 dark:border-gray-700 rounded-lg p-6 shadow-lg">
+          <h3 className="text-lg font-semibold text-gray-100 dark:text-white mb-4">
             Recent Activity
           </h3>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-gray-300 dark:text-gray-200">
             Recent shipments and customer activity will be displayed here.
           </p>
         </div>
         
-        <div className="bg-white dark:bg-gray-950/70 border border-gray-200 dark:border-gray-900 rounded-lg p-6 shadow-lg">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        <div className="bg-gray-800 dark:bg-gray-900 border border-gray-600 dark:border-gray-700 rounded-lg p-6 shadow-lg">
+          <h3 className="text-lg font-semibold text-gray-100 dark:text-white mb-4">
             Quick Actions
           </h3>
           <div className="space-y-2">
-            <button className="w-full text-left px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+            <button 
+              onClick={() => navigate('/admin/shipments')}
+              className="w-full text-left px-3 py-2 text-sm text-blue-400 hover:bg-gray-700 dark:hover:bg-gray-800 rounded transition-colors"
+            >
               Create New Shipment
             </button>
-            <button className="w-full text-left px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+            <button 
+              onClick={() => navigate('/admin/customers')}
+              className="w-full text-left px-3 py-2 text-sm text-blue-400 hover:bg-gray-700 dark:hover:bg-gray-800 rounded transition-colors"
+            >
               View All Customers
             </button>
-            <button className="w-full text-left px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded">
+            <button 
+              onClick={() => navigate('/admin/mail')}
+              className="w-full text-left px-3 py-2 text-sm text-blue-400 hover:bg-gray-700 dark:hover:bg-gray-800 rounded transition-colors"
+            >
               Send Email Campaign
             </button>
           </div>
