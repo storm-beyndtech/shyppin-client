@@ -59,7 +59,7 @@ const Contact = () => {
   const contactMethods = [
     {
       method: "Phone",
-      value: "+1 (888) 749-7746",
+      value: "+1 (562) 522-3628",
       description: "Speak with a logistics expert",
       available: "24/7",
       icon: Phone,
