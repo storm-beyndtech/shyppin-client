@@ -134,9 +134,9 @@ const Contact = () => {
                     Headquarters
                   </h3>
                   <div className="text-gray-600 dark:text-gray-400 text-sm">
-                    <p>2750 Harbor Blvd, Suite 400</p>
-                    <p>Costa Mesa, CA 92626</p>
-                    <p>United States</p>
+                    <p>Boulevard Plaza Tower 1</p>
+                    <p>Sheikh Mohammed bin Rashid Boulevard</p>
+                    <p>Downtown Dubai, UAE</p>
                   </div>
                 </div>
               </div>
