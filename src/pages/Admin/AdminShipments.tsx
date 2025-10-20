@@ -126,12 +126,14 @@ export default function AdminShipments() {
 		currentLocation: "",
 		notes: "",
 	});
-	const [statusUpdates, setStatusUpdates] = useState([{
-		status: "",
-		location: "",
-		description: "",
-		timestamp: new Date().toISOString().slice(0, 16), // Format for datetime-local input
-	}]);
+	const [statusUpdates, setStatusUpdates] = useState([
+		{
+			status: "",
+			location: "",
+			description: "",
+			timestamp: new Date().toISOString().slice(0, 16), // Format for datetime-local input
+		},
+	]);
 	const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
 	const [newShipment, setNewShipment] = useState<NewShipment>({
@@ -242,12 +244,14 @@ export default function AdminShipments() {
 		setShowCreateModal(false);
 		setShowEditModal(false);
 		setStatusUpdate({ status: "", currentLocation: "", notes: "" });
-		setStatusUpdates([{
-			status: "",
-			location: "",
-			description: "",
-			timestamp: new Date().toISOString().slice(0, 16),
-		}]);
+		setStatusUpdates([
+			{
+				status: "",
+				location: "",
+				description: "",
+				timestamp: new Date().toISOString().slice(0, 16),
+			},
+		]);
 	};
 
 	const openCreateModal = () => {
@@ -255,12 +259,15 @@ export default function AdminShipments() {
 	};
 
 	const addStatusUpdate = () => {
-		setStatusUpdates([...statusUpdates, {
-			status: "",
-			location: "",
-			description: "",
-			timestamp: new Date().toISOString().slice(0, 16),
-		}]);
+		setStatusUpdates([
+			...statusUpdates,
+			{
+				status: "",
+				location: "",
+				description: "",
+				timestamp: new Date().toISOString().slice(0, 16),
+			},
+		]);
 	};
 
 	const removeStatusUpdate = (index: number) => {
@@ -293,18 +300,22 @@ export default function AdminShipments() {
 			notes: "",
 		});
 		// Initialize with existing tracking events or empty array
-		setStatusUpdates(shipment.trackingEvents?.length > 0 ? 
-			shipment.trackingEvents.map(event => ({
-				status: event.status,
-				location: event.location,
-				description: event.description,
-				timestamp: new Date(event.timestamp).toISOString().slice(0, 16),
-			})) : [{
-				status: "",
-				location: "",
-				description: "",
-				timestamp: new Date().toISOString().slice(0, 16),
-			}]
+		setStatusUpdates(
+			shipment.trackingEvents?.length > 0
+				? shipment.trackingEvents.map((event) => ({
+						status: event.status,
+						location: event.location,
+						description: event.description,
+						timestamp: new Date(event.timestamp).toISOString().slice(0, 16),
+				  }))
+				: [
+						{
+							status: "",
+							location: "",
+							description: "",
+							timestamp: new Date().toISOString().slice(0, 16),
+						},
+				  ],
 		);
 		setShowEditModal(true);
 	};
@@ -403,12 +414,12 @@ export default function AdminShipments() {
 			let updateData = { ...newShipment } as Shipment;
 
 			// Process status updates array
-			const validStatusUpdates = statusUpdates.filter(update => 
-				update.status && update.location && update.description
+			const validStatusUpdates = statusUpdates.filter(
+				(update) => update.status && update.location && update.description,
 			);
 
 			if (validStatusUpdates.length > 0) {
-				const trackingEvents = validStatusUpdates.map(update => ({
+				const trackingEvents = validStatusUpdates.map((update) => ({
 					timestamp: new Date(update.timestamp).toISOString(),
 					location: update.location,
 					status: update.status,
@@ -703,87 +714,87 @@ export default function AdminShipments() {
 			<div className="hidden lg:block bg-gray-800 dark:bg-gray-900 rounded-lg border border-gray-600 dark:border-gray-700 overflow-hidden">
 				<div className="overflow-x-auto">
 					<table className="min-w-full divide-y divide-gray-600 dark:divide-gray-700">
-					<thead className="bg-gray-700 dark:bg-gray-950">
-						<tr>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Tracking Number
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Sender
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Recipient
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Service
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Status
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
-								Actions
-							</th>
-						</tr>
-					</thead>
-					<tbody className="bg-gray-800 dark:bg-gray-900 divide-y divide-gray-600 dark:divide-gray-700">
-						{filteredShipments.map((shipment) => (
-							<tr key={shipment._id} className="hover:bg-gray-700 dark:hover:bg-gray-800">
-								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
-									{shipment.trackingNumber}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-									<div>
-										<div className="font-medium">{shipment.sender.name}</div>
-										<div className="text-gray-400">
-											{shipment.sender.city}, {shipment.sender.state}
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
-									<div>
-										<div className="font-medium">{shipment.recipient.name}</div>
-										<div className="text-gray-400">
-											{shipment.recipient.city}, {shipment.recipient.state}
-										</div>
-									</div>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize">
-									{shipment.service.type}
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap">
-									<span
-										className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full text-white ${getStatusColor(
-											shipment.status,
-										)}`}
-									>
-										{shipment.status.replace("-", " ")}
-									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-									<div className="flex space-x-2">
-										<button
-											onClick={() => openShipmentModal(shipment)}
-											className="text-blue-400 hover:text-blue-300"
-										>
-											<Eye className="h-4 w-4" />
-										</button>
-										<button
-											onClick={() => openEditModal(shipment)}
-											className="text-yellow-400 hover:text-yellow-300"
-										>
-											<Edit className="h-4 w-4" />
-										</button>
-										<button
-											onClick={() => handleDeleteShipment(shipment._id)}
-											className="text-red-400 hover:text-red-300"
-										>
-											<Trash2 className="h-4 w-4" />
-										</button>
-									</div>
-								</td>
+						<thead className="bg-gray-700 dark:bg-gray-950">
+							<tr>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Tracking Number
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Sender
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Recipient
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Service
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Status
+								</th>
+								<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+									Actions
+								</th>
 							</tr>
-						))}
-					</tbody>
+						</thead>
+						<tbody className="bg-gray-800 dark:bg-gray-900 divide-y divide-gray-600 dark:divide-gray-700">
+							{filteredShipments.map((shipment) => (
+								<tr key={shipment._id} className="hover:bg-gray-700 dark:hover:bg-gray-800">
+									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-100">
+										{shipment.trackingNumber}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+										<div>
+											<div className="font-medium">{shipment.sender.name}</div>
+											<div className="text-gray-400">
+												{shipment.sender.city}, {shipment.sender.state}
+											</div>
+										</div>
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+										<div>
+											<div className="font-medium">{shipment.recipient.name}</div>
+											<div className="text-gray-400">
+												{shipment.recipient.city}, {shipment.recipient.state}
+											</div>
+										</div>
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize">
+										{shipment.service.type}
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap">
+										<span
+											className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full text-white ${getStatusColor(
+												shipment.status,
+											)}`}
+										>
+											{shipment.status.replace("-", " ")}
+										</span>
+									</td>
+									<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+										<div className="flex space-x-2">
+											<button
+												onClick={() => openShipmentModal(shipment)}
+												className="text-blue-400 hover:text-blue-300"
+											>
+												<Eye className="h-4 w-4" />
+											</button>
+											<button
+												onClick={() => openEditModal(shipment)}
+												className="text-yellow-400 hover:text-yellow-300"
+											>
+												<Edit className="h-4 w-4" />
+											</button>
+											<button
+												onClick={() => handleDeleteShipment(shipment._id)}
+												className="text-red-400 hover:text-red-300"
+											>
+												<Trash2 className="h-4 w-4" />
+											</button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -1412,13 +1423,16 @@ export default function AdminShipments() {
 											/>
 										</div>
 										<div>
-											<label className="block text-sm font-medium text-gray-300 mb-1">Estimated Delivery</label>
+											<label className="block text-sm font-medium text-gray-300 mb-1">
+												Estimated Delivery
+											</label>
 											<input
 												type="datetime-local"
 												required
-												value={typeof newShipment.service.estimatedDelivery === 'string' 
-													? new Date(newShipment.service.estimatedDelivery).toISOString().slice(0, 16)
-													: new Date().toISOString().slice(0, 16)
+												value={
+													typeof newShipment.service.estimatedDelivery === "string"
+														? new Date(newShipment.service.estimatedDelivery).toISOString().slice(0, 16)
+														: new Date().toISOString().slice(0, 16)
 												}
 												onChange={(e) =>
 													setNewShipment((prev) => ({
@@ -1500,7 +1514,9 @@ export default function AdminShipments() {
 										{statusUpdates.map((update, index) => (
 											<div key={index} className="bg-gray-700 dark:bg-gray-800 p-4 rounded-lg">
 												<div className="flex justify-between items-start mb-3">
-													<span className="text-sm font-medium text-gray-300">Status Update #{index + 1}</span>
+													<span className="text-sm font-medium text-gray-300">
+														Status Update #{index + 1}
+													</span>
 													{statusUpdates.length > 1 && (
 														<button
 															type="button"
@@ -1516,7 +1532,7 @@ export default function AdminShipments() {
 														<label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
 														<select
 															value={update.status}
-															onChange={(e) => updateStatusUpdate(index, 'status', e.target.value)}
+															onChange={(e) => updateStatusUpdate(index, "status", e.target.value)}
 															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 														>
 															<option value="">Select Status</option>
@@ -1531,11 +1547,13 @@ export default function AdminShipments() {
 														</select>
 													</div>
 													<div>
-														<label className="block text-sm font-medium text-gray-300 mb-1">Date & Time</label>
+														<label className="block text-sm font-medium text-gray-300 mb-1">
+															Date & Time
+														</label>
 														<input
 															type="datetime-local"
 															value={update.timestamp}
-															onChange={(e) => updateStatusUpdate(index, 'timestamp', e.target.value)}
+															onChange={(e) => updateStatusUpdate(index, "timestamp", e.target.value)}
 															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 														/>
 													</div>
@@ -1544,17 +1562,19 @@ export default function AdminShipments() {
 														<input
 															type="text"
 															value={update.location}
-															onChange={(e) => updateStatusUpdate(index, 'location', e.target.value)}
+															onChange={(e) => updateStatusUpdate(index, "location", e.target.value)}
 															placeholder="Enter location"
 															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 														/>
 													</div>
 													<div>
-														<label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
+														<label className="block text-sm font-medium text-gray-300 mb-1">
+															Description
+														</label>
 														<input
 															type="text"
 															value={update.description}
-															onChange={(e) => updateStatusUpdate(index, 'description', e.target.value)}
+															onChange={(e) => updateStatusUpdate(index, "description", e.target.value)}
 															placeholder="Enter description"
 															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
 														/>
