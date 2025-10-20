@@ -13,8 +13,8 @@ export default function AdminShipmentCards() {
       setLoading(true);
       const token = localStorage.getItem('token');
       
-      // Fetch customers from real API endpoint
-      const customersRes = await fetch(`${url}/api/customers`, {
+      // Fetch customers from users API endpoint
+      const customersRes = await fetch(`${url}/users`, {
         headers: {
           ...(token && { 'x-auth-token': token })
         }
@@ -26,7 +26,7 @@ export default function AdminShipmentCards() {
       }
 
       // Fetch shipments
-      const shipmentsRes = await fetch(`${url}/api/shipments`, {
+      const shipmentsRes = await fetch(`${url}/shipments`, {
         headers: {
           ...(token && { 'x-auth-token': token })
         }

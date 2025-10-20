@@ -701,7 +701,8 @@ export default function AdminShipments() {
 
 			{/* Desktop Table */}
 			<div className="hidden lg:block bg-gray-800 dark:bg-gray-900 rounded-lg border border-gray-600 dark:border-gray-700 overflow-hidden">
-				<table className="min-w-full divide-y divide-gray-600 dark:divide-gray-700">
+				<div className="overflow-x-auto">
+					<table className="min-w-full divide-y divide-gray-600 dark:divide-gray-700">
 					<thead className="bg-gray-700 dark:bg-gray-950">
 						<tr>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
@@ -713,14 +714,11 @@ export default function AdminShipments() {
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
 								Recipient
 							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider hidden xl:table-cell">
+							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
 								Service
 							</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
 								Status
-							</th>
-							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider hidden xl:table-cell">
-								Location
 							</th>
 							<th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
 								Actions
@@ -749,7 +747,7 @@ export default function AdminShipments() {
 										</div>
 									</div>
 								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 hidden xl:table-cell capitalize">
+								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 capitalize">
 									{shipment.service.type}
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap">
@@ -760,9 +758,6 @@ export default function AdminShipments() {
 									>
 										{shipment.status.replace("-", " ")}
 									</span>
-								</td>
-								<td className="px-6 py-4 whitespace-nowrap text-sm text-gray-300 hidden xl:table-cell">
-									{shipment.currentLocation}
 								</td>
 								<td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
 									<div className="flex space-x-2">
@@ -789,7 +784,8 @@ export default function AdminShipments() {
 							</tr>
 						))}
 					</tbody>
-				</table>
+					</table>
+				</div>
 			</div>
 
 			{/* Mobile Cards */}
