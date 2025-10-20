@@ -124,32 +124,59 @@ const Tracking = () => {
 
 							{/* Status Timeline */}
 							<div className="p-6">
-								<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Tracking Events</h3>
-								<div className="space-y-4">
-									{(shipmentData as any).trackingEvents?.map((event: any, index: number) => (
-										<div key={index} className="flex items-start">
-											<div className={`w-3 h-3 rounded-full ${getStatusColor(event.status)} mt-2 mr-4 flex-shrink-0`}></div>
-											<div className="flex-1">
-												<div className="flex justify-between items-start">
-													<div>
-														<h4 className="font-semibold text-gray-900 dark:text-gray-100 capitalize">
-															{event.status.replace('-', ' ')}
-														</h4>
-														<p className="text-gray-600 dark:text-gray-400 text-sm">
-															{event.description}
-														</p>
-														<p className="text-gray-500 dark:text-gray-500 text-sm">
-															{event.location}
-														</p>
+								<h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-6">Shipment History</h3>
+								{(shipmentData as any).trackingEvents && (shipmentData as any).trackingEvents.length > 0 ? (
+									<div className="space-y-6">
+										{(shipmentData as any).trackingEvents
+											?.sort((a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+											.map((event: any, index: number) => (
+											<div key={index} className="relative">
+												{index < (shipmentData as any).trackingEvents.length - 1 && (
+													<div className="absolute left-6 top-12 w-0.5 h-12 bg-gray-300 dark:bg-gray-600"></div>
+												)}
+												<div className="flex items-start space-x-4">
+													<div className={`w-12 h-12 rounded-full ${getStatusColor(event.status)} flex items-center justify-center flex-shrink-0`}>
+														<div className="w-2 h-2 bg-white rounded-full"></div>
 													</div>
-													<span className="text-sm text-gray-500 dark:text-gray-400">
-														{new Date(event.timestamp).toLocaleString()}
-													</span>
+													<div className="flex-1 min-w-0">
+														<div className="flex justify-between items-start mb-2">
+															<div>
+																<h4 className="font-bold text-gray-900 dark:text-gray-100 capitalize text-lg">
+																	{event.status.replace('-', ' ')}
+																</h4>
+																<p className="text-gray-600 dark:text-gray-400 text-sm mb-1">
+																	{event.description}
+																</p>
+																<p className="text-gray-500 dark:text-gray-500 text-sm font-medium">
+																	📍 {event.location}
+																</p>
+															</div>
+															<div className="text-right">
+																<p className="text-sm text-gray-900 dark:text-gray-100 font-semibold">
+																	{new Date(event.timestamp).toLocaleDateString('en-US', {
+																		month: 'short',
+																		day: 'numeric',
+																		year: 'numeric'
+																	})}
+																</p>
+																<p className="text-sm text-gray-500 dark:text-gray-400">
+																	{new Date(event.timestamp).toLocaleTimeString('en-US', {
+																		hour: '2-digit',
+																		minute: '2-digit'
+																	})}
+																</p>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
-										</div>
-									))}
-								</div>
+										))}
+									</div>
+								) : (
+									<div className="text-center py-8">
+										<p className="text-gray-500 dark:text-gray-400">No tracking events available yet.</p>
+									</div>
+								)}
 							</div>
 
 							{/* Shipment Info */}
@@ -174,9 +201,20 @@ const Tracking = () => {
 										</p>
 									</div>
 									<div>
-										<h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Est. Delivery</h4>
-										<p className="text-gray-600 dark:text-gray-400">
-											{new Date((shipmentData as any).service?.estimatedDelivery).toLocaleDateString()}
+										<h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-2">Estimated Delivery</h4>
+										<p className="text-blue-600 dark:text-blue-400 font-semibold">
+											{new Date((shipmentData as any).service?.estimatedDelivery).toLocaleDateString('en-US', {
+												weekday: 'long',
+												year: 'numeric',
+												month: 'long',
+												day: 'numeric'
+											})}
+										</p>
+										<p className="text-sm text-gray-500 dark:text-gray-400">
+											{new Date((shipmentData as any).service?.estimatedDelivery).toLocaleTimeString('en-US', {
+												hour: '2-digit',
+												minute: '2-digit'
+											})}
 										</p>
 									</div>
 								</div>

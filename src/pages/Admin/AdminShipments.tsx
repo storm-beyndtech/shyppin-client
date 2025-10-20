@@ -126,6 +126,12 @@ export default function AdminShipments() {
 		currentLocation: "",
 		notes: "",
 	});
+	const [statusUpdates, setStatusUpdates] = useState([{
+		status: "",
+		location: "",
+		description: "",
+		timestamp: new Date().toISOString().slice(0, 16), // Format for datetime-local input
+	}]);
 	const url = import.meta.env.VITE_REACT_APP_SERVER_URL;
 
 	const [newShipment, setNewShipment] = useState<NewShipment>({
@@ -236,10 +242,37 @@ export default function AdminShipments() {
 		setShowCreateModal(false);
 		setShowEditModal(false);
 		setStatusUpdate({ status: "", currentLocation: "", notes: "" });
+		setStatusUpdates([{
+			status: "",
+			location: "",
+			description: "",
+			timestamp: new Date().toISOString().slice(0, 16),
+		}]);
 	};
 
 	const openCreateModal = () => {
 		setShowCreateModal(true);
+	};
+
+	const addStatusUpdate = () => {
+		setStatusUpdates([...statusUpdates, {
+			status: "",
+			location: "",
+			description: "",
+			timestamp: new Date().toISOString().slice(0, 16),
+		}]);
+	};
+
+	const removeStatusUpdate = (index: number) => {
+		if (statusUpdates.length > 1) {
+			setStatusUpdates(statusUpdates.filter((_, i) => i !== index));
+		}
+	};
+
+	const updateStatusUpdate = (index: number, field: string, value: string) => {
+		const updated = [...statusUpdates];
+		updated[index] = { ...updated[index], [field]: value };
+		setStatusUpdates(updated);
 	};
 
 	const openEditModal = (shipment: Shipment) => {
@@ -259,6 +292,20 @@ export default function AdminShipments() {
 			currentLocation: shipment.currentLocation,
 			notes: "",
 		});
+		// Initialize with existing tracking events or empty array
+		setStatusUpdates(shipment.trackingEvents?.length > 0 ? 
+			shipment.trackingEvents.map(event => ({
+				status: event.status,
+				location: event.location,
+				description: event.description,
+				timestamp: new Date(event.timestamp).toISOString().slice(0, 16),
+			})) : [{
+				status: "",
+				location: "",
+				description: "",
+				timestamp: new Date().toISOString().slice(0, 16),
+			}]
+		);
 		setShowEditModal(true);
 	};
 
@@ -355,23 +402,27 @@ export default function AdminShipments() {
 			// Prepare update data including status and location updates
 			let updateData = { ...newShipment } as Shipment;
 
-			// Check if status or location has changed and add tracking event
-			if (
-				statusUpdate.status !== selectedShipment.status ||
-				statusUpdate.currentLocation !== selectedShipment.currentLocation
-			) {
-				const trackingEvent = {
-					timestamp: new Date().toISOString(),
-					location: statusUpdate.currentLocation,
-					status: statusUpdate.status,
-					description: statusUpdate.notes || `Status updated to ${statusUpdate.status.replace("-", " ")}`,
-				};
+			// Process status updates array
+			const validStatusUpdates = statusUpdates.filter(update => 
+				update.status && update.location && update.description
+			);
+
+			if (validStatusUpdates.length > 0) {
+				const trackingEvents = validStatusUpdates.map(update => ({
+					timestamp: new Date(update.timestamp).toISOString(),
+					location: update.location,
+					status: update.status,
+					description: update.description,
+				}));
+
+				// Get the latest status for the main status field
+				const latestUpdate = validStatusUpdates[validStatusUpdates.length - 1];
 
 				updateData = {
 					...updateData,
-					status: statusUpdate.status,
-					currentLocation: statusUpdate.currentLocation,
-					trackingEvents: [...(selectedShipment.trackingEvents || []), trackingEvent],
+					status: latestUpdate.status,
+					currentLocation: latestUpdate.location,
+					trackingEvents: trackingEvents,
 					updatedAt: new Date().toISOString(),
 				};
 			}
@@ -1231,7 +1282,7 @@ export default function AdminShipments() {
 								{/* Package Information */}
 								<div className="space-y-4">
 									<h3 className="text-lg font-semibold text-gray-100">Package Information</h3>
-									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+									<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 										<div>
 											<label className="block text-sm font-medium text-gray-300 mb-1">Weight (lbs)</label>
 											<input
@@ -1348,6 +1399,40 @@ export default function AdminShipments() {
 												<option value="overnight">Overnight</option>
 											</select>
 										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-300 mb-1">Service Cost ($)</label>
+											<input
+												type="number"
+												required
+												step="0.01"
+												value={newShipment.service.cost}
+												onChange={(e) =>
+													setNewShipment((prev) => ({
+														...prev,
+														service: { ...prev.service, cost: parseFloat(e.target.value) || 0 },
+													}))
+												}
+												className="w-full px-3 py-2 bg-gray-700 dark:bg-gray-800 border border-gray-600 dark:border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+											/>
+										</div>
+										<div>
+											<label className="block text-sm font-medium text-gray-300 mb-1">Estimated Delivery</label>
+											<input
+												type="datetime-local"
+												required
+												value={typeof newShipment.service.estimatedDelivery === 'string' 
+													? new Date(newShipment.service.estimatedDelivery).toISOString().slice(0, 16)
+													: new Date().toISOString().slice(0, 16)
+												}
+												onChange={(e) =>
+													setNewShipment((prev) => ({
+														...prev,
+														service: { ...prev.service, estimatedDelivery: e.target.value },
+													}))
+												}
+												className="w-full px-3 py-2 bg-gray-700 dark:bg-gray-800 border border-gray-600 dark:border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+											/>
+										</div>
 									</div>
 									<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 										<div className="flex items-center">
@@ -1402,57 +1487,87 @@ export default function AdminShipments() {
 									</div>
 								</div>
 
-								{/* Status and Location Update Section for Edit Mode */}
-								{showEditModal && selectedShipment && (
-									<div className="mt-6 pt-6 border-t border-gray-600 dark:border-gray-700">
-										<h3 className="text-lg font-semibold text-gray-100 mb-4">Update Status & Location</h3>
-										<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-											<div>
-												<label className="block text-sm font-medium text-gray-300 mb-2">Status</label>
-												<select
-													value={statusUpdate.status}
-													onChange={(e) => setStatusUpdate({ ...statusUpdate, status: e.target.value })}
-													className="w-full px-3 py-2 bg-gray-700 dark:bg-gray-800 border border-gray-600 dark:border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-												>
-													<option value="pending">Pending</option>
-													<option value="picked-up">Picked Up</option>
-													<option value="in-transit">In Transit</option>
-													<option value="arrived">Arrived</option>
-													<option value="out-for-delivery">Out for Delivery</option>
-													<option value="delivered">Delivered</option>
-													<option value="delayed">Delayed</option>
-													<option value="exception">Exception</option>
-												</select>
-											</div>
-											<div>
-												<label className="block text-sm font-medium text-gray-300 mb-2">
-													Current Location
-												</label>
-												<input
-													type="text"
-													value={statusUpdate.currentLocation}
-													onChange={(e) =>
-														setStatusUpdate({ ...statusUpdate, currentLocation: e.target.value })
-													}
-													placeholder="Enter current location"
-													className="w-full px-3 py-2 bg-gray-700 dark:bg-gray-800 border border-gray-600 dark:border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-												/>
-											</div>
-										</div>
-										<div className="mt-4">
-											<label className="block text-sm font-medium text-gray-300 mb-2">
-												Status Update Notes (Optional)
-											</label>
-											<textarea
-												value={statusUpdate.notes}
-												onChange={(e) => setStatusUpdate({ ...statusUpdate, notes: e.target.value })}
-												placeholder="Add notes about this status update..."
-												rows={3}
-												className="w-full px-3 py-2 bg-gray-700 dark:bg-gray-800 border border-gray-600 dark:border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											/>
-										</div>
+								{/* Status History Section */}
+								<div className="mt-6 pt-6 border-t border-gray-600 dark:border-gray-700">
+									<div className="flex justify-between items-center mb-4">
+										<h3 className="text-lg font-semibold text-gray-100">Status History</h3>
+										<button
+											type="button"
+											onClick={addStatusUpdate}
+											className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm"
+										>
+											<Plus className="w-4 h-4 inline mr-1" />
+											Add Status
+										</button>
 									</div>
-								)}
+									<div className="space-y-4 max-h-80 overflow-y-auto">
+										{statusUpdates.map((update, index) => (
+											<div key={index} className="bg-gray-700 dark:bg-gray-800 p-4 rounded-lg">
+												<div className="flex justify-between items-start mb-3">
+													<span className="text-sm font-medium text-gray-300">Status Update #{index + 1}</span>
+													{statusUpdates.length > 1 && (
+														<button
+															type="button"
+															onClick={() => removeStatusUpdate(index)}
+															className="text-red-400 hover:text-red-300"
+														>
+															<Trash2 className="w-4 h-4" />
+														</button>
+													)}
+												</div>
+												<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+													<div>
+														<label className="block text-sm font-medium text-gray-300 mb-1">Status</label>
+														<select
+															value={update.status}
+															onChange={(e) => updateStatusUpdate(index, 'status', e.target.value)}
+															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+														>
+															<option value="">Select Status</option>
+															<option value="pending">Pending</option>
+															<option value="picked-up">Picked Up</option>
+															<option value="in-transit">In Transit</option>
+															<option value="arrived">Arrived</option>
+															<option value="out-for-delivery">Out for Delivery</option>
+															<option value="delivered">Delivered</option>
+															<option value="delayed">Delayed</option>
+															<option value="exception">Exception</option>
+														</select>
+													</div>
+													<div>
+														<label className="block text-sm font-medium text-gray-300 mb-1">Date & Time</label>
+														<input
+															type="datetime-local"
+															value={update.timestamp}
+															onChange={(e) => updateStatusUpdate(index, 'timestamp', e.target.value)}
+															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+														/>
+													</div>
+													<div>
+														<label className="block text-sm font-medium text-gray-300 mb-1">Location</label>
+														<input
+															type="text"
+															value={update.location}
+															onChange={(e) => updateStatusUpdate(index, 'location', e.target.value)}
+															placeholder="Enter location"
+															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+														/>
+													</div>
+													<div>
+														<label className="block text-sm font-medium text-gray-300 mb-1">Description</label>
+														<input
+															type="text"
+															value={update.description}
+															onChange={(e) => updateStatusUpdate(index, 'description', e.target.value)}
+															placeholder="Enter description"
+															className="w-full px-3 py-2 bg-gray-600 dark:bg-gray-700 border border-gray-500 dark:border-gray-600 rounded text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+														/>
+													</div>
+												</div>
+											</div>
+										))}
+									</div>
+								</div>
 
 								<div className="flex gap-4 pt-4">
 									<button
