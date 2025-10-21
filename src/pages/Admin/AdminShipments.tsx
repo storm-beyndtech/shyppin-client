@@ -399,6 +399,19 @@ export default function AdminShipments() {
 		e.preventDefault();
 		if (!selectedShipment) return;
 
+		// Validate status updates - check for incomplete entries
+		const incompleteUpdates = statusUpdates.filter(
+			(update) => 
+				(update.status && (!update.location || !update.description)) ||
+				(update.location && (!update.status || !update.description)) ||
+				(update.description && (!update.status || !update.location))
+		);
+
+		if (incompleteUpdates.length > 0) {
+			setError("Please complete all fields for each status update or remove incomplete entries.");
+			return;
+		}
+
 		setSubmitting(true);
 		setError("");
 
@@ -413,27 +426,39 @@ export default function AdminShipments() {
 			// Prepare update data including status and location updates
 			let updateData = { ...newShipment } as Shipment;
 
-			// Process status updates array
+			// Process status updates array - only include complete entries
 			const validStatusUpdates = statusUpdates.filter(
-				(update) => update.status && update.location && update.description,
+				(update) => update.status && update.location && update.description && update.timestamp,
 			);
 
+			// Only update if we have at least one valid status update
 			if (validStatusUpdates.length > 0) {
-				const trackingEvents = validStatusUpdates.map((update) => ({
+				// Sort by timestamp to ensure chronological order
+				const sortedUpdates = validStatusUpdates.sort((a, b) => 
+					new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+				);
+
+				const trackingEvents = sortedUpdates.map((update) => ({
 					timestamp: new Date(update.timestamp).toISOString(),
-					location: update.location,
+					location: update.location.trim(),
 					status: update.status,
-					description: update.description,
+					description: update.description.trim(),
 				}));
 
-				// Get the latest status for the main status field
-				const latestUpdate = validStatusUpdates[validStatusUpdates.length - 1];
+				// Get the latest status for the main status field (most recent timestamp)
+				const latestUpdate = sortedUpdates[sortedUpdates.length - 1];
 
 				updateData = {
 					...updateData,
 					status: latestUpdate.status,
-					currentLocation: latestUpdate.location,
+					currentLocation: latestUpdate.location.trim(),
 					trackingEvents: trackingEvents,
+					updatedAt: new Date().toISOString(),
+				};
+			} else {
+				// If no valid status updates, just update the shipment details without changing status
+				updateData = {
+					...updateData,
 					updatedAt: new Date().toISOString(),
 				};
 			}
@@ -1511,8 +1536,13 @@ export default function AdminShipments() {
 										</button>
 									</div>
 									<div className="space-y-4 max-h-80 overflow-y-auto">
-										{statusUpdates.map((update, index) => (
-											<div key={index} className="bg-gray-700 dark:bg-gray-800 p-4 rounded-lg">
+										{statusUpdates.map((update, index) => {
+											const isIncomplete = (update.status && (!update.location || !update.description)) ||
+												(update.location && (!update.status || !update.description)) ||
+												(update.description && (!update.status || !update.location));
+											
+											return (
+											<div key={index} className={`p-4 rounded-lg ${isIncomplete ? 'bg-red-900/20 border border-red-500/50' : 'bg-gray-700 dark:bg-gray-800'}`}>
 												<div className="flex justify-between items-start mb-3">
 													<span className="text-sm font-medium text-gray-300">
 														Status Update #{index + 1}
@@ -1581,7 +1611,8 @@ export default function AdminShipments() {
 													</div>
 												</div>
 											</div>
-										))}
+											);
+										})}
 									</div>
 								</div>
 
